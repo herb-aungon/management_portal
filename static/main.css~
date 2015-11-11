@@ -1,0 +1,13 @@
+.form_container {
+    background-color: #EDEDED;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    padding-left: 35px;
+    padding-right: 35px;
+    border-radius: 15px;
+    border-color: #d2d2d2;
+    border-width: 5px;
+    box-shadow: 0 1px 0 #cfcfcf;
+    height: 300px;
+    width: 400px;
+}

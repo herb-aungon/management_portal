@@ -1,0 +1,47 @@
+.form_container {
+    background-color: #D3D6D0;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    padding-left: 50px;
+    padding-right: 55px;
+    border-radius: 15px;
+    border-color: #d2d2d2;
+    border-width: 5px;
+    box-shadow: 0 1px 0 #cfcfcf;
+    height: 300px;
+    width: 450px;
+    margin-top: 30px;
+}
+
+.form-horizontal{
+margin-right :100px;
+
+}
+
+#password, #username, #login{
+font-size: 16px;
+}
+
+
+h4{
+width:350px;
+}
+
+
+#password, #username{
+width:350px;
+height:40px;
+}
+
+.input_form{
+    margin-bottom:5px
+}
+
+h4 {
+    border: 0 solid #fff;
+    border-bottom-width: 1px;
+    padding-bottom: 10px;
+    text-align: center;
+    margin:0 0px 5px 15px;
+}
+
