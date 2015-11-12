@@ -1,16 +1,35 @@
+@import url(http://fonts.googleapis.com/css?family=Roboto:400);
+body {
+  background-color: #D3D6D0;
+  -webkit-font-smoothing: antialiased;
+  font-family: monospace;
+
+}
+
+#form_cont{
+border-top: 8px solid #337ab7;
+/* border-bottom: 8px solid #337ab7; */
+/* border-right: 8px solid #337ab7; */
+/* border-left: 8px solid #337ab7; */
+}
+
+.icon{
+    color: #337ab7;
+}
+
 .form_container {
-    background-color: #D3D6D0;
+    background-color:#fff;
     padding-top: 20px;
     padding-bottom: 20px;
     padding-left: 50px;
     padding-right: 55px;
     border-radius: 15px;
-    border-color: #d2d2d2;
     border-width: 5px;
     box-shadow: 0 1px 0 #cfcfcf;
     height: 300px;
     width: 450px;
     margin-top: 30px;
+    font-family: monospace;
 }
 
 .form-horizontal{
@@ -28,7 +47,7 @@ width:350px;
 }
 
 
-#password, #username{
+#password, #username, #login{
 width:350px;
 height:40px;
 }
