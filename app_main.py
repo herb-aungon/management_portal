@@ -4,7 +4,7 @@
 from flask import Flask,request, render_template, flash, jsonify, make_response, Response, url_for, redirect
 from pymongo import MongoClient
 import json, datetime, local_settings, calendar, collections
-from modules.sched_portal_objects import *
+from modules.management_portal_obj import *
 
 config = local_settings.env
 app = Flask(__name__)
