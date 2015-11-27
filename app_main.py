@@ -34,12 +34,12 @@ def internal_500_error( exception ):
 @app.errorhandler( 404 )
 def internal_404_error( exception ):
      #app.logger.exception( exception )
-     return 'scheduler <br/>\n%s<br/>\n%s' % ( exception, request.url )
+     return 'management portal <br/>\n%s<br/>\n%s' % ( exception, request.url )
 
 @app.errorhandler( 401 )
 def internal_401_error( exception ):
      #app.logger.exception( exception )
-     return 'scheduler<br/>\n%s<br/>\n%s' % ( exception, request.url )
+     return 'management portal<br/>\n%s<br/>\n%s' % ( exception, request.url )
 
 
 def default_encoder( obj, encoder=json.JSONEncoder() ):
@@ -53,22 +53,18 @@ def default_encoder( obj, encoder=json.JSONEncoder() ):
 
 @app.route("/login", methods = [ 'GET' ] )
 def log_in_get():
-     token_id = "hi" #request.headers.get('x-token')
-     resp = make_response()
-     resp.headers.add('X-token',token_id)
-
-     return render_template('log_in.html',resp=resp )
+     return render_template('log_in.html')
 
 @app.route("/login", methods = [ 'POST' ] )
 def log_in_post():
-     token_id = "hi" #request.headers.get('x-token')
      try:
+          token_id = "test"
           payload = request.data
           payload_json = json.loads(payload)
-          user_details = payload_json[0]
-          user_details.update({ "headers":dict(request.headers), "cookies":dict(request.cookies) })
+          user_details = payload_json
+          #user_details.update({ "headers":dict(request.headers), "cookies":dict(request.cookies) })
           user_init = user(mongodb)
-          get_result = user_init.check_login(user_details)
+          get_result = user_init.check(user_details)
           result = json.dumps (get_result, default=default_encoder, indent = 2, sort_keys = True)
           resp = make_response(result)
           resp.headers.add('X-token',token_id)
@@ -104,5 +100,5 @@ def logout_options():
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
-    #app.run()
+    #app.run(debug=True)
+    app.run(host='192.168.1.76')
