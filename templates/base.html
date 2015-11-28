@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Management Portal</title>
+    <!-- CSS -->
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="{{url_for('static', filename='base.css') }}" rel="stylesheet">
+  </head>
+
+    <div class="container">
+
+	<ul class="nav nav-tabs">
+	  <li role="presentation" ><a  id="home" href="#">Finance Management</a></li>
+	  <li role="presentation" ><a id="manage" href="#">Workout Management</a></li>
+	  <li role="presentation" ><a id="manage" href="#">Schedule Management</a></li>
+	  <div id="logout" class="btn-group" style="float: right;">
+
+	    <button type="button" class="btn btn-default" id="logout" >
+	      <strong >Logout</strong>
+	      <span class="glyphicon glyphicon-log-out"></span>
+	      <span class="sr-only">Logout Button</span>
+	    </button>
+	      </div>
+	</ul>
+
+
+
+	<div style="background:transparent !important" class="jumbotron">
+
+	  {% block finance %}{% endblock %}
+	  {% block workout %}{% endblock %}
+	  {% block schedule %}{% endblock %}
+
+
+	</div>
+
+
+    </div>
+	<footer class="footer">
+	<div class="footer_container">
+	  <p class="text-muted">&copy; Created by Herbert Aungon 2015</p>
+	</div>
+	</footer>
+    
+	    
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+      <script src="{{url_for('static', filename='main.js') }}"></script>
+
+    <!-- <script src="{{url_for('static', filename='bootstrap/js/bootstrap.min.js') }}"></script> -->
+    <!-- <script src="{{url_for('static', filename='bootstrap/js/bootstrap.js') }}"></script> -->
+
+</body>
+</html>

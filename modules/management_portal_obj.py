@@ -1,6 +1,6 @@
-import  pprint, dpath.util, datetime, json, bson, copy, calendar, collections
+import  pprint, dpath.util,  json, bson, copy, calendar, collections
 from bson.objectid import ObjectId
-
+from datetime import *
 class message():
     def __init__(self):
         self.__resp = {'success':False, 'message':None, 'data':None}
@@ -22,15 +22,71 @@ class user():
             username = user_data.get('username')
             password = user_data.get('password')
             if len(username)>0 or len(password)>0:
-                resp_data.update({'message':'Welcome %s' % user_data.get('username'), 'success':True})
+                user_check = self.__mongodb.user.find_one( { "username":username, "password":password } )
+                if user_check:
+                    token = self.__mongodb.token.insert( { 
+                        "login_date" :datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
+                        "headers":'',
+                        "cookies":'',
+                        "username":user_check.get('username'),
+                        "last_activity":datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+                    } )
+                    resp_data.update({'message':'Welcome %s' % user_check.get('username'), 'success':True, 'data':token})
+                else:
+                    resp_data.update({'message':'Login Failed!Incorrect username/password'})
             else:
                 resp_data.update({'message':'username or password cannot be empty!'})
         except Exception as e:
-            resp_data.update({ 'message':'Failed to Authorise!Reason:%s' % e })
+            resp_data.update({ 'message':'Failed to Authorise Login!Reason:%s' % e })
             
         msg_upd=msg_class.update(resp_data)
         return msg_upd 
 
+
+    def token_validator(self,token_id):
+        msg_class = message()
+        resp_data = {}
+
+        try:
+            token = self.__mongodb.token.find_one({"_id": ObjectId(token_id)})
+        except Exception as e:
+            #token = None
+            resp_data.update({ 'message':'Failed to Authenticate tokenn!Reason:%s' % e })
+            msg_upd=msg_class.update(resp_data)
+            return msg_upd 
+
+        try:
+            if token:
+                last_act = datetime.strptime(token.get('last_activity'),'%Y-%m-%d %H:%M:%S')
+                now_raw = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+                now = datetime.strptime(now_raw,'%Y-%m-%d %H:%M:%S')
+                time_left = (now - last_act).total_seconds()/60
+                
+                if time_left <= 60:
+                    self.__mongodb.token.update(
+                        {
+                            "_id": ObjectId(token_id)
+                        },
+                        { "$set":
+                          {
+                              "last_activity": datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+                          }
+                      },
+                        upsert= False,
+                        multi=False
+                    )
+                    resp_data.update({ 'message':'Login session renewed for user %s' % token.get('username'), 'success':True })
+                else:
+                    self.__mongodb.token.remove( { "_id": ObjectId(token_id) } )
+                    resp_data.update({ 'message':'Login session expired for user %s' % token.get('username') })
+            else:
+                resp_data.update({ 'message':'Token not found!' })
+
+        except Exception as e:
+            resp_data.update({ 'message':'Failed to Authenticate tokenn!Reason:%s' % e })
+
+        msg_upd=msg_class.update(resp_data)
+        return  msg_upd
 
 
 

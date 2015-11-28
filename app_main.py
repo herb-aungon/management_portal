@@ -67,7 +67,7 @@ def log_in_post():
           get_result = user_init.check(user_details)
           result = json.dumps (get_result, default=default_encoder, indent = 2, sort_keys = True)
           resp = make_response(result)
-          resp.headers.add('X-token',token_id)
+          resp.headers.add('X-token',get_result.get('data'))
      except Exception as e:
           resp="Error! %s " % e
      return resp
@@ -75,6 +75,31 @@ def log_in_post():
 @app.route("/login", methods = [ 'OPTIONS' ] )
 def log_in_options():
      return ''
+
+
+@app.route("/home/<token>", methods = [ 'GET' ] )
+def home_get(token):
+     ##token=request.headers.get('X-token')
+     user_init = user(mongodb)
+     token_check = user_init.token_validator(token)
+
+     if token_check.get('success')==True:
+          resp = render_template('base.html')#json.dumps(message)
+     else:
+          resp = render_template('log_in.html')#json.dumps(message)
+     return resp
+
+
+
+@app.route("/home/<token>", methods = [ 'OPTIONS' ] )
+def home_opts(token):
+     return ''
+
+
+
+
+
+
 
 @app.route("/logout", methods = [ 'DELETE' ] )
 def logout_del():

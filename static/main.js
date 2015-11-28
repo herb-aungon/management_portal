@@ -3,6 +3,7 @@ var stats = null;
 var token = null;
 var message=null;
 var data=null;
+var stat=null;
 $( document ).ready(function() {
     
     $('#login').click(function(){
@@ -30,27 +31,32 @@ $( document ).ready(function() {
 	    },
 	    success: function(result, status, xhr) {
 		console.log(result);
-		console.log(status);
+		//console.log(status);
 		token=xhr.getResponseHeader("X-token");
-		console.log(token);
+		//console.log(token);
 		var result_json = JSON.parse(result);
-		console.log(result_json);
+		//console.log(result_json);
 		message = result_json['message'];
-		
+		stat = result_json['success'];
+		console.log(stat);
 	    },
 	    async: false
 	});
 
-	console.log(message);
+	//console.log(stat);
+	if(stat==true){
+	    console.log('success');
+	    console.log(message);
+	    url_get = url + 'home/' + token
+	    console.log(url_get);
+	    window.location.href = url_get
 
-	
-	// if(username.length > 1)
-	// {
-	// }else{
-
-	//     $("#neg_msg_val").text(message)
-	//     $(".negative_msg").show();
-	// }
+	}else{
+	    console.log(message);
+	    //location.reload();
+	    $("#neg_msg_val").text(message)
+	    $(".negative_msg").show();
+	}
 
 
 	
