@@ -26,8 +26,8 @@ class user():
                 if user_check:
                     token = self.__mongodb.token.insert( { 
                         "login_date" :datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
-                        "headers":'',
-                        "cookies":'',
+                        "headers":user_data.get('headers'),
+                        "cookies":user_data.get('cookies'),
                         "username":user_check.get('username'),
                         "last_activity":datetime.now().strftime('%Y-%m-%d %H:%M:%S')
                     } )
@@ -88,6 +88,17 @@ class user():
         msg_upd=msg_class.update(resp_data)
         return  msg_upd
 
+    def delete(self, token):
+        msg_class = message()
+        resp_data = {}
+        try:
+            self.__mongodb.token.remove( { "_id": ObjectId(token) } )
+            resp_data.update({'message':'Token %s removed' % token, 'success':True })
+        except Exception as e:
+            resp_data.update({ 'message':'Failed to removed token !Reason:%s' % e })
+            
+        msg_upd=msg_class.update(resp_data)
+        return msg_upd 
 
 
 # class user( ):

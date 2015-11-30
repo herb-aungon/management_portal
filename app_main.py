@@ -62,7 +62,7 @@ def log_in_post():
           payload = request.data
           payload_json = json.loads(payload)
           user_details = payload_json
-          #user_details.update({ "headers":dict(request.headers), "cookies":dict(request.cookies) })
+          user_details.update({ "headers":dict(request.headers), "cookies":dict(request.cookies) })
           user_init = user(mongodb)
           get_result = user_init.check(user_details)
           result = json.dumps (get_result, default=default_encoder, indent = 2, sort_keys = True)
@@ -84,7 +84,7 @@ def home_get(token):
      token_check = user_init.token_validator(token)
 
      if token_check.get('success')==True:
-          resp = render_template('base.html')#json.dumps(message)
+          resp = render_template('fin.html')#json.dumps(message)
      else:
           resp = render_template('log_in.html')#json.dumps(message)
      return resp
@@ -97,20 +97,15 @@ def home_opts(token):
 
 
 
-
-
-
-
 @app.route("/logout", methods = [ 'DELETE' ] )
 def logout_del():
      try:
-          payload = request.data
-          payload_json = json.loads(payload)
-          id_raw = payload_json[0]
+          token=request.headers.get('X-token')
           logout_init = user(mongodb)
-          logout = logout_init.logout(id_raw.get('id'))
-          result = json.dumps (logout, default=default_encoder, indent = 2, sort_keys = True)
-          resp = make_response(result)
+          logout = logout_init.delete(token)
+          # result = json.dumps (logout, default=default_encoder, indent = 2, sort_keys = True)
+          # resp = make_response(result)
+          resp = json.dumps(logout, default=default_encoder, indent = 2, sort_keys = True)
      except Exception as e:
           resp="Error! %s " % e
      return resp

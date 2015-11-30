@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% block finance %}
+   {{ super() }}
+
+	  <form class="form-inline pinas" role="form">
+	    <legend>Budget Form</legend>
+	    <div class="form-group">
+	      <label class="sr-only" for="name">Name</label>
+	      <input type="text" class="form-control" name="name" placeholder="enter name" style="text-transform:lowercase;" />
+	    </div>
+	    <div class="form-group">
+	      <label class="sr-only" for="amount">Amount</label>
+	      <input type="text" class="form-control" name="amount" placeholder="enter amount" style="text-transform:lowercase;"/>
+	    </div>
+	    <br>
+	  </form>
+	  <br>
+	    <span class="group-btn">
+	      <a href="#" class="btn btn-info" id="add">Add New Field</a>
+	      <a href="#" class="btn btn-success" id="save">Save</a>
+	    </span>
+	  <!-- {% if battle %} -->
+
+	  <!-- <h2>Battles Created</h2> -->
+	  <!-- <table id="hash" class="table table-hover" > -->
+	  <!--   <thead> -->
+	  <!--     <tr> -->
+	  <!-- 	<th>Name</th> -->
+	  <!-- 	<th>Start</th> -->
+	  <!-- 	<th>End</th> -->
+	  <!-- 	<th>Num of Typo</th> -->
+	  <!-- 	<th>Winner</th> -->
+	  <!-- 	<th>Action</th> -->
+	  <!--     </tr> -->
+	  <!--   </thead> -->
+	  <!--   <tbody> -->
+	  <!--     {% for i in battle %} -->
+	  <!--     <tr class="{{ i.name }}"> -->
+	  <!--       <td>{{ i.name }}</td> -->
+	  <!--       <td>{{ i.start_date }}</td> -->
+	  <!-- 	<td>{{ i.end_date }}</td> -->
+	  <!-- 	<td>{{ i.num_typos }}</td> -->
+	  <!-- 	<td>{{ i.winner }}</td> -->
+	  <!-- 	<td>  <span class="group-btn"> -->
+	  <!-- 	    <a href="#" class="btn btn-primary btn-sm start" id="{{ i.name }}">Start Battle</a> -->
+	  <!-- 	    <a href="#" class="btn btn-info btn-sm modify" id="{{ i.name }}">Modify</a> -->
+	  <!-- 	    <a href="#" class="btn btn-warning btn-sm delete" id="{{ i.name }}">Delete</a> -->
+	  <!-- 	  </span> -->
+	  <!-- 	</td> -->
+	  <!--     </tr> -->
+	  <!--     {% endfor %} -->
+	  <!--   </tbody> -->
+	  <!-- </table> -->
+	  <!-- {% endif %} -->
+	  
+{% endblock %}
