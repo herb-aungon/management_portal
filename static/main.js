@@ -106,7 +106,7 @@ $( document ).ready(function() {
 
     //finance page
     var max_fields = 50; //maximum input boxes allowed
-    var wrapper = $(".pinas"); //Fields wrapper
+    var wrapper = $(".budget"); //Fields wrapper
     var x = 1; //initlal text box count
     $("#add").click(function(e){
 	console.log('new field added');
@@ -114,28 +114,28 @@ $( document ).ready(function() {
 	if(x < max_fields){ //max input box allowed
 	    x++; //text box increment
 	    //$(wrapper).append('<div><input type="text" name="mytext[]"/><a href="#" class="remove_field">Remove</a></div>'); //add input box
-	    $(wrapper).append('<div class="form-group pinas"><label class="sr-only" for="name">Name</label><input type="text" class="form-control name" name="name" placeholder="enter name" style="text-transform:lowercase;" /></div><div class="form-group pinas"><label class="sr-only" for="amount">Amount</label><input type="text" class="form-control amount" name="amount" placeholder="enter amount" style="text-transform:lowercase;"/></div><a href="#" class="remove_field"><span class="glyphicon glyphicon-remove"></span>Remove</a></div><br>');
-	    var _id = document.querySelectorAll('.name');
-	    var _amount = document.querySelectorAll('.amount');
-	    var _remove = document.querySelectorAll('.remove_field');
-	    var id_val = "name_amount_"+x;
-	    console.log(id_val);
-	    _id.id= id_val;
-	    _amount.id=id_val;
-	    _remove.id=id_val;
+	    $(wrapper).append('<div><select id="select_name" name="name" class="drop_name"><option selected>Select Name</option>{% for name in names %}<option value="{{ name.name }}">{{ name.name }}</option>{% endfor %}</select><select id="select_amount" name="name" class="drop_amount"><option selected>Select Name</option></select></div>');
+	    // var _id = document.querySelectorAll('.name');
+	    // var _amount = document.querySelectorAll('.amount');
+	    // var _remove = document.querySelectorAll('.remove');
+	    // var id_val = "name_amount_"+x;
+	    // console.log(id_val);
+	    // _id.id= id_val;
+	    // _amount.id=id_val;
+	    // _remove.id=id_val;
 	}
 
     });
 
-    $(".remove_field").click(function(){
-	alert("");
-	var id = $(this).attr("id");
-	var _log = id + " field removed"
-	console.log(_log);
-	//$("")
+    $('.drop_name').on('change', function() {
+	for (amount =50; amount < 20000; amount += 50) {
+	    $('.drop_amount').append( new Option(amount) );
+	}
     });
+    
 
 
+    
 });
 
 

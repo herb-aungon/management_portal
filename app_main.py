@@ -45,7 +45,7 @@ def internal_401_error( exception ):
 def default_encoder( obj, encoder=json.JSONEncoder() ):
     if isinstance( obj, ObjectId ): 
         return str( obj )  
-    if isinstance(obj, datetime.datetime):
+    if isinstance(obj, datetime):
          date = datetime.date(obj.year, obj.month, obj.day)
          return str(date)#.strftime( '%Y-%m-%d' )
     return encoder.default( obj )
@@ -82,9 +82,16 @@ def home_get(token):
      ##token=request.headers.get('X-token')
      user_init = user(mongodb)
      token_check = user_init.token_validator(token)
-
+     
      if token_check.get('success')==True:
-          resp = render_template('fin.html')#json.dumps(message)
+          try:
+               data_init = raw_data(mongodb)
+               get_data = data_init.get()
+               names = get_data.get('data').get('names')
+               months =json.dumps(get_data.get('data').get('months'))
+               resp = render_template('fin.html', names=names, months=months)#json.dumps(message)
+          except Exception as e:
+               resp="Error! %s " % e
      else:
           resp = render_template('log_in.html')#json.dumps(message)
      return resp
