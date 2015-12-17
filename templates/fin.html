@@ -3,38 +3,49 @@
    {{ super() }}
 
 
+<a  id="create_budget" href="#">Create Monthly Budget</a></li>
+<a id="view_monthly"></a>
+
+<br>
+
 <textarea rows="4" cols="50">
   {{ months }}
   </textarea>
 
-<textarea rows="4" cols="50">
-  {{ names }}
-  </textarea>
-
-
-
-<div class="col-md-10 budget">
-  <legend>Budget Form</legend>
-  <div>
-  <select id="select_name" name="name" class="drop_name">
-    <option selected>Select Name</option>
-    {% for name in names %}
-    <option value="{{ name.name }}">{{ name.name }}</option>
-    {% endfor %}
-  </select>
+<!-- <textarea rows="4" cols="50"> -->
+<!--   {{ names }} -->
+<!--   </textarea> -->
   
-  <select id="select_amount" name="name" class="drop_amount">
-    <option selected>Select Name</option>
-  </select>
-  </div>
-  
-</div>
-<br>
-<div class="col-md-10">
-  <span class="group-btn">
-    <a href="#" class="btn btn-info" id="add">Add New Field</a>
-    <a href="#" class="btn btn-success" id="save">Save</a>
-  </span>
-</div>
-	  
+
+<form class="form-inline budget_form" id="budget_frm" hidden>
+  <fieldset>
+    <legend>Budget Form</legend>
+    <div class="col-md-6">
+    <label class="label_name">Amount:
+      <select id="budget_amount">
+      	<option selected>0</option>
+      </select>
+      <label class="label_name">Amount Remaining:
+	<input type="text" class="" id="remaining" value="0" disabled />
+      </label>
+
+    </label>
+    </div>
+    <div class="col-md-10 budget" hidden>
+      {% for name in names %}	
+	<input type="text" class="select_name" id="{{name.name }}_" value="{{ name.name }}" disabled />
+	<select id="{{name.name }}"  class="drop_amount">
+	  <option selected>0</option>
+	</select>
+	{% endfor %}
+
+	<br><span class="group-btn">
+	  <a href="#" class="btn btn-success" id="save">Save</a>
+	  <a href="#" class="btn btn-warning" id="close">Close</a>
+	</span>
+	
+    </div>
+  </fieldset>
+</form>
+
 {% endblock %}

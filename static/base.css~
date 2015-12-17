@@ -1,0 +1,28 @@
+
+body {
+  background-color: #D3D6D0;
+  -webkit-font-smoothing: antialiased;
+  font-family: monospace;
+
+}
+
+.container{
+    background-color:#fff;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    padding-left: 50px;
+    padding-right: 55px;
+    border-radius: 15px;
+    border-width: 5px;
+    box-shadow: 0 1px 0 #cfcfcf;
+    height: auto;
+    width: 1050px;
+    margin-top: 30px;
+    align:center;
+    font-family: monospace;
+}
+
+
+.try {
+    display: inline-block;
+}

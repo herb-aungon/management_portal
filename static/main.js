@@ -1,9 +1,9 @@
-var url = 'http://192.168.1.76:5000/'
+var url = 'http://herbportal.ddns.net/'
 var stats = null;
 var token = null;
 var message=null;
 var data=null;
-var sucess=null;
+var success_msg=null;
 var user=null;
 
 $( document ).ready(function() {
@@ -40,19 +40,20 @@ $( document ).ready(function() {
 		var result_json = JSON.parse(result);
 		//console.log(result_json);
 		message = result_json['message'];
-		success = result_json['success'];
-		//console.log(success);
+		success_msg = result_json['success'];
+		//console.log(success_msg);
 		localStorage.setItem("token", token);
 		localStorage.setItem("username", username);
-		localStorage.setItem("success", success);
+		localStorage.setItem("success_msg", success_msg);
 		localStorage.setItem("message", message);
 	    },
 	    async: false
 	});
 
 	//console.log(stat);
-	if(success==true){
-	    //console.log('success');
+	//var test = localStorage.getItem("success_msg")
+	if(success_msg==true){
+	    //console.log(success_msg);
 	    //console.log(message);
 	    url_get = url + 'home/' + token
 	    console.log(url_get);
@@ -104,37 +105,60 @@ $( document ).ready(function() {
     });
 
 
-    //finance page
-    var max_fields = 50; //maximum input boxes allowed
-    var wrapper = $(".budget"); //Fields wrapper
-    var x = 1; //initlal text box count
-    $("#add").click(function(e){
-	console.log('new field added');
-	e.preventDefault();
-	if(x < max_fields){ //max input box allowed
-	    x++; //text box increment
-	    //$(wrapper).append('<div><input type="text" name="mytext[]"/><a href="#" class="remove_field">Remove</a></div>'); //add input box
-	    $(wrapper).append('<div><select id="select_name" name="name" class="drop_name"><option selected>Select Name</option>{% for name in names %}<option value="{{ name.name }}">{{ name.name }}</option>{% endfor %}</select><select id="select_amount" name="name" class="drop_amount"><option selected>Select Name</option></select></div>');
-	    // var _id = document.querySelectorAll('.name');
-	    // var _amount = document.querySelectorAll('.amount');
-	    // var _remove = document.querySelectorAll('.remove');
-	    // var id_val = "name_amount_"+x;
-	    // console.log(id_val);
-	    // _id.id= id_val;
-	    // _amount.id=id_val;
-	    // _remove.id=id_val;
-	}
 
-    });
-
-    $('.drop_name').on('change', function() {
+    $("#create_budget").click(function(){
+	$(".budget_form").show();
 	for (amount =50; amount < 20000; amount += 50) {
 	    $('.drop_amount').append( new Option(amount) );
 	}
+	for (amount = 10000; amount < 30000; amount += 100) {
+	    $('#budget_amount').append( new Option(amount) );
+	}
     });
+
+    $("#close").click(function(){
+	$(".budget_form").hide();
+    })
     
+    var budget_raw = {};
 
+    $("#save").click(function(){
 
+	$(".select_name").each(function() {
+	    var name = $(this).val();
+	    var sel_id =  "#" + name;
+	    var amount= parseInt($(sel_id).val());
+	    t = name + ":" + amount
+	    budget_raw[name] =amount;
+	    //console.log(t);
+	});
+
+	var budget= JSON.stringify(budget_raw);
+	console.log(budget);
+	if(document.getElementById("remaining").value==0){
+	    console.log("valid");
+	}else{
+	    console.log("invalid");
+	}
+
+	
+    });
+
+    $('#budget_amount').on('change', function() {
+	document.getElementById("remaining").value = $("#budget_amount").val();
+	$(".budget").show();
+	var id = "#" + $(this).attr("id");
+	$(id).prop("disabled", true);
+    });
+
+    $('.drop_amount').on('change', function() {
+	var id = "#" + $(this).attr("id");
+	console.log(id);
+	$(this).prop("disabled", true);
+
+	var remaining = parseInt(document.getElementById("remaining").value) - $(this).val();
+	document.getElementById("remaining").value = remaining;
+    });
     
 });
 
