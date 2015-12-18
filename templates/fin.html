@@ -2,15 +2,21 @@
 {% block finance %}
    {{ super() }}
 
+{% include 'second_nav.html' %}
 
-<a  id="create_budget" href="#">Create Monthly Budget</a></li>
-<a id="view_monthly"></a>
+
+<!-- <textarea rows="4" cols="50"> -->
+<!--   {{ months }} -->
+<!-- </textarea> -->
+
+
+
+<div id="left_content">
+<a  id="create_budget" href="#" style="margin-right:50px">Create Monthly Budget</a></li>
+<a id="view_monthly">Create Housing Budget</a>
 
 <br>
-
-<textarea rows="4" cols="50">
-  {{ months }}
-  </textarea>
+<br>
 
 <!-- <textarea rows="4" cols="50"> -->
 <!--   {{ names }} -->
@@ -19,8 +25,8 @@
 
 <form class="form-inline budget_form" id="budget_frm" hidden>
   <fieldset>
-    <legend>Budget Form</legend>
-    <div class="col-md-6">
+    <!-- <legend>Budget Form</legend> -->
+    <div class="col-md-8" id="form_contianer">
     <label class="label_name">Amount:
       <select id="budget_amount">
       	<option selected>0</option>
@@ -47,5 +53,5 @@
     </div>
   </fieldset>
 </form>
-
+<div>
 {% endblock %}
