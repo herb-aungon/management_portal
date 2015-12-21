@@ -13,10 +13,19 @@
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
     <link href="{{url_for('static', filename='base.css') }}" rel="stylesheet">
+    
+    <!-- JS Script -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="{{url_for('static', filename='main.js') }}"></script>
+    <!-- <script src="{{url_for('static', filename='bootstrap/js/bootstrap.min.js') }}"></script> -->
+    <!-- <script src="{{url_for('static', filename='bootstrap/js/bootstrap.js') }}"></script> -->
 
+
+    
   </head>
+  <body>
 
-    <div class="container">
+    <div class="container" style="margin:20px auto;">
 
       <ul class="nav nav-tabs">
 	  <li role="presentation" ><a  id="finance" href="#">Finance Management</a></li>
@@ -32,29 +41,21 @@
 	    </button>
 	      </div>
 	</ul>
-	<div style="background:transparent !important" >
+	<div class="child_temp" style="background:transparent !important" >
 
 	  {% block finance %}{% endblock %}
 	  {% block workout %}{% endblock %}
 	  {% block schedule %}{% endblock %}
-
-
 	</div>
 
 
     </div>
-	<footer class="footer">
-	<div class="footer_container" id="footer">
-	  <p class="text-muted">&copy; Created by Herbert Aungon 2015</p>
-	</div>
-	</footer>
-    
-	    
-      <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-      <script src="{{url_for('static', filename='main.js') }}"></script>
+    <footer>
+    <div id="footer">
+	<p>&copy; Created by Herbert Aungon 2015</p>
 
-    <!-- <script src="{{url_for('static', filename='bootstrap/js/bootstrap.min.js') }}"></script> -->
-    <!-- <script src="{{url_for('static', filename='bootstrap/js/bootstrap.js') }}"></script> -->
+    </div>
+    </footer>        
 
 </body>
 </html>

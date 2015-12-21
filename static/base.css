@@ -3,46 +3,37 @@ body {
   background-color: #D3D6D0;
   -webkit-font-smoothing: antialiased;
   font-family: monospace;
-
+  height: 100%;
 }
 
 .container{
     background-color:#fff;
     padding-top: 20px;
-    padding-bottom: 20px;
+    padding-bottom: 5px;
     padding-left: 50px;
     padding-right: 55px;
     border-radius: 15px;
     border-width: 5px;
     box-shadow: 0 1px 0 #cfcfcf;
+    min-height: 100%;
     height: auto;
     width: 1050px;
-    margin-top: 30px;
-    align:center;
+    margin:30px auto 10px auto;
     font-family: monospace;
+    /* border: 1px solid red; */
 }
 
-
-.try {
-    display: inline-block;
-}
-
-.name{
-    /* padding: 10px 50px 10px 20px; */
-    margin-right:8px;
-    margin-top:5px;
+#footer{
+    /* border: 1px solid blue; */
+    margin-left:440px;
+    margin-top:-15px;
+    float: left;
 }
 
 .amount{
     /* padding: 10px 50px 10px 20px; */
     margin-right:8px;
     margin-top:5px;
-}
-
-
-.footer{
-    margin-left:445px;
-
 }
 
 .drop_name{
@@ -57,7 +48,6 @@ body {
     margin-bottom:10px;
 
 }
-
 
 .drop_amount{
     height:30px;
@@ -149,7 +139,7 @@ body {
     padding-right:100px;
 }
 
-#form_container{
-    /* margin-top: 100px; */
+.sub_link_left{
+    border-bottom: 1px solid #cfcfcf;
 
 }
