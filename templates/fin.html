@@ -29,16 +29,46 @@
   <form class="form-inline budget_form" id="budget_frm" hidden>
     <fieldset>
       <!-- <legend>Budget Form</legend> -->
-      <div class="col-md-8" id="form_contianer">
-	<label class="label_name">Amount:
+      <div class="col-md-8" id="form_container">
+	<label class="label_amount">Amount(Pesos):
 	  <select id="budget_amount">
       	    <option selected>0</option>
 	  </select>
-	  <label class="label_name">Amount Remaining:
-	    <input type="text" class="" id="remaining" value="0" disabled />
-	  </label>
-	  
 	</label>
+	
+	<label class="label_amount" id="rate_label">Rate Pounds-Pesos:
+	  <select id="pounds_pesos">
+      	    <option selected>0</option>
+	  </select>
+	</label>
+	<label class="label_amount" id="month_label" hidden>Select Month:
+	  <select id="month">
+	    <option selected>Month</option>
+	    <option >January</option>
+	    <option >February</option>
+	    <option >March</option>
+	    <option >April</option>
+	    <option >May</option>
+	    <option >June</option>
+	    <option >July</option>
+	    <option >August</option>
+	    <option >September</option>
+	    <option >October</option>
+	    <option >November</option>
+	    <option >December</option>
+	  </select>
+	</label>
+
+	
+	<label class="label_amount">Amount Remaining:
+	  <input type="text"  id="remaining" value="0" disabled />
+	</label>
+
+	<label class="label_amount">Total Amoun(Pounds):
+	  <input type="text" id="total_pounds" value="0" class="input_amount" disabled />
+	</label>
+
+
       </div>
       
       <div class="col-md-10 budget" hidden>

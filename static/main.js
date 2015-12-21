@@ -114,10 +114,43 @@ $( document ).ready(function() {
 	for (amount = 10000; amount < 30000; amount += 100) {
 	    $('#budget_amount').append( new Option(amount) );
 	}
+	for (amount =60; amount < 100; amount += 1) {
+	    $('#pounds_pesos').append( new Option(amount) );
+	}
     });
 
+    $('#budget_amount').on('change', function() {
+	document.getElementById("remaining").value = $("#budget_amount").val();
+	var id = "#" + $(this).attr("id");
+	$(id).prop("disabled", true);
+	// $("#pounds_pesos").prop("disabled", false);
+
+    });
+    $('#pounds_pesos').on('change', function() {
+	var total_pounds = $("#budget_amount").val() / parseInt($(this).val());
+	document.getElementById("total_pounds").selectedIndex = 0;
+	$("#pounds_pesos").prop("disabled", true);
+	$("#month_label").show();
+    });
+
+    $('#month').on('change', function() {
+    	$(".budget").show();
+    });
+
+
+    
+    $('.drop_amount').on('change', function() {
+	var id = "#" + $(this).attr("id");
+	console.log(id);
+	$(this).prop("disabled", true);
+	
+	var remaining = parseInt(document.getElementById("remaining").value) - $(this).val();
+	document.getElementById("remaining").value = remaining;
+    });
+
+    
     $("#close").click(function(){
-	$(".budget_form").hide();
+	location.reload();
     })
     
     var budget_raw = {};
@@ -132,7 +165,9 @@ $( document ).ready(function() {
 	    budget_raw[name] =amount;
 	    //console.log(t);
 	});
-
+	budget_raw["amount_pesos"]= parseInt($("#budget_amount").val());
+	budget_raw["rate"]= parseInt($("#pounds_pesos").val());
+	budget_raw["month"]= $("#month").val();
 	var budget= JSON.stringify(budget_raw);
 	console.log(budget);
 	if(document.getElementById("remaining").value==0){
@@ -140,26 +175,9 @@ $( document ).ready(function() {
 	}else{
 	    console.log("invalid");
 	}
-
 	
     });
 
-    $('#budget_amount').on('change', function() {
-	document.getElementById("remaining").value = $("#budget_amount").val();
-	$(".budget").show();
-	var id = "#" + $(this).attr("id");
-	$(id).prop("disabled", true);
-    });
-
-    $('.drop_amount').on('change', function() {
-	var id = "#" + $(this).attr("id");
-	console.log(id);
-	$(this).prop("disabled", true);
-
-	var remaining = parseInt(document.getElementById("remaining").value) - $(this).val();
-	document.getElementById("remaining").value = remaining;
-    });
-    
 });
 
 
