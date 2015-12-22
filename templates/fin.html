@@ -15,9 +15,21 @@
 </div>
 
 <div id="left_content">
+
   <a  id="create_budget" href="#" style="margin-right:50px">Create Monthly Budget</a>
   <a id="view_monthly">Create Housing Budget</a>
 
+  <div class="alert alert-danger budget_msg_ng" hidden>
+    <a href="" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+    <strong id="budget_msg_ng"></strong>
+  </div>
+
+  <div class="alert alert-danger budget_msg_ps" hidden>
+    <a href="" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+    <strong id="budget_msg_ps"></strong>
+  </div>
+  
+  
   <br>
   <br>
 
@@ -36,13 +48,13 @@
 	  </select>
 	</label>
 	
-	<label class="label_amount" id="rate_label">Rate Pounds-Pesos:
+	<label class="label_rate" id="rate_label">Rate Pounds-Pesos:
 	  <select id="pounds_pesos">
       	    <option selected>0</option>
 	  </select>
 	</label>
-	<label class="label_amount" id="month_label" hidden>Select Month:
-	  <select id="month">
+	<label class="label_month" id="month_label" > Select Month:
+	  <select id="month" disabled>
 	    <option selected>Month</option>
 	    <option >January</option>
 	    <option >February</option>
@@ -58,30 +70,29 @@
 	    <option >December</option>
 	  </select>
 	</label>
-
 	
 	<label class="label_amount">Amount Remaining:
 	  <input type="text"  id="remaining" value="0" disabled />
 	</label>
 
-	<label class="label_amount">Total Amoun(Pounds):
+	<label class="label_amount">Total Amount(Pounds):
 	  <input type="text" id="total_pounds" value="0" class="input_amount" disabled />
 	</label>
 
-
       </div>
       
-      <div class="col-md-10 budget" hidden>
+      <div class="col-md-10 budget">
 	{% for name in names %}	
-	<input type="text" class="select_name" id="{{name.name }}_" value="{{ name.name }}" disabled />
-	<select id="{{name.name }}"  class="drop_amount">
+	<input type="text" class="select_name" id="{{ name.name }}_" value="{{ name.name }}" disabled />
+	<select id="{{ name.name }}"  class="drop_amount" disabled>
 	  <option selected>0</option>
 	</select>
 	{% endfor %}
 
 	<br><span class="group-btn">
 	  <a href="#" class="btn btn-success" id="save">Save</a>
-	  <a href="#" class="btn btn-warning" id="close">Close</a>
+	  <a href="#" class="btn btn-warning" id="clear">Clear</a>
+	  <a href="#" class="btn btn-danger" id="reset">Reset All</a>
 	</span>
 	
       </div>

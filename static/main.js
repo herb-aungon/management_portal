@@ -128,20 +128,22 @@ $( document ).ready(function() {
     });
     $('#pounds_pesos').on('change', function() {
 	var total_pounds = $("#budget_amount").val() / parseInt($(this).val());
-	document.getElementById("total_pounds").selectedIndex = 0;
+	document.getElementById("total_pounds").value = total_pounds 
 	$("#pounds_pesos").prop("disabled", true);
-	$("#month_label").show();
+	// $("#month_label").show();
+	$("#month").prop("disabled", false);
     });
 
     $('#month').on('change', function() {
-    	$(".budget").show();
+	$(".drop_amount").prop("disabled", false);
+
     });
 
 
     
     $('.drop_amount').on('change', function() {
 	var id = "#" + $(this).attr("id");
-	console.log(id);
+	// console.log(id);
 	$(this).prop("disabled", true);
 	
 	var remaining = parseInt(document.getElementById("remaining").value) - $(this).val();
@@ -149,9 +151,17 @@ $( document ).ready(function() {
     });
 
     
-    $("#close").click(function(){
+    $("#clear").click(function(){
+	$('.drop_amount').prop('selectedIndex', 0);
+	$(".drop_amount").prop("disabled", false);
+    })
+
+    
+    $("#reset").click(function(){
 	location.reload();
     })
+
+
     
     var budget_raw = {};
 
@@ -165,15 +175,48 @@ $( document ).ready(function() {
 	    budget_raw[name] =amount;
 	    //console.log(t);
 	});
+	var date = new Date();
+	var year = date.getFullYear();
+	
 	budget_raw["amount_pesos"]= parseInt($("#budget_amount").val());
 	budget_raw["rate"]= parseInt($("#pounds_pesos").val());
 	budget_raw["month"]= $("#month").val();
+	budget_raw["year"]= year;
+	budget_raw["amount_pounds"]= parseInt($("#total_pounds").val());
 	var budget= JSON.stringify(budget_raw);
 	console.log(budget);
+
+	
 	if(document.getElementById("remaining").value==0){
 	    console.log("valid");
+	    var token = localStorage.getItem("token");
+	    var budget_url = url + "home/" +token + "/" + "monthly_budget"
+	    $.ajax({
+		type : "POST",
+		url : budget_url,
+		data: budget,
+		contentType: 'application/json;charset=UTF-8',
+		headers: {
+		    'X-token':localStorage.getItem("token"),
+		    'Content-Type':'application/json'
+		},
+		success: function(result, status, xhr) {
+		    console.log(result);
+		},
+		async: false
+	    });
+	    location.reload();
+	    var message = "success"
+	    console.log("message");
+	    alert(message);
+
 	}else{
-	    console.log("invalid");
+	    $(".drop_amount").prop("disabled", false);
+	    var message = "Check amount remaining!All Amount must be allocated!"
+	    console.log("message");
+	    $("#budget_msg_ng").text(message)
+	    $(".budget_msg_ng").show();
+
 	}
 	
     });

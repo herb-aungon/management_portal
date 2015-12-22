@@ -100,6 +100,50 @@ class user():
         msg_upd=msg_class.update(resp_data)
         return msg_upd 
 
+class budget():
+    def __init__( self, mongodb ):
+        self.__mongodb = mongodb
+
+    def create(self,data):
+        msg_class = message()
+        resp_data = {}
+        try:
+            if len(data)>0:
+                format_data = {}
+                format_data['amount_pesos']= int( data.get('amount_pesos'))
+                format_data['month']= data.get('month')
+                format_data['year'] = int(data.get('year'))
+                format_data['rate'] = int(data.get('rate'))
+                format_data['amount_pounds']= int(data.get('amount_pounds'))
+
+                #exclude the fields below
+                del data['amount_pesos']
+                del data['month']
+                del data['year']
+                del data['rate']
+                del data['amount_pounds']
+
+                data_keys = data.keys()
+                breakdown=[]
+
+                #format data 
+                for name in data_keys:
+                    breakdown.append({ "name":name, "amount":data.get(name) })
+
+                format_data["budget_breakdown"]=breakdown
+
+                resp_data.update({'message':'Monthly Budget Created', 'data':format_data, 'success':True})
+            else:
+                resp_data.update({'message':'data empty!'})
+        except Exception as e:
+            resp_data.update({ 'message':'Failed to create!Reason: %s' % e })
+            
+        msg_upd=msg_class.update(resp_data)
+        return msg_upd 
+
+
+
+
 class raw_data():
     def __init__( self, mongodb ):
         self.__mongodb = mongodb

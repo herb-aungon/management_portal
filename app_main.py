@@ -51,6 +51,7 @@ def default_encoder( obj, encoder=json.JSONEncoder() ):
     return encoder.default( obj )
 
 
+
 @app.route("/login", methods = [ 'GET' ] )
 def log_in_get():
      return render_template('log_in.html')
@@ -122,10 +123,44 @@ def logout_options():
      return ''
 
 
+@app.route("/home/<token>/monthly_budget", methods = [ 'GET' ] )
+def budget_get(token):
+     user_init = user(mongodb)
+     token_check = user_init.token_validator(token)
+     if token_check.get('success')==True:
+          try:
+               payload = request.data
+               payload_json = json.loads(payload)
+               
+               resp = "test" #render_template('fin.html', names=names, months=months)#json.dumps(message)
+          except Exception as e:
+               resp="Error! %s " % e
+     else:
+          resp = render_template('log_in.html')#json.dumps(message)
+     return resp
 
+@app.route("/home/<token>/monthly_budget", methods = [ 'POST' ] )
+def budget_post(token):
+     user_init = user(mongodb)
+     token_check = user_init.token_validator(token)
+     if token_check.get('success')==True:
+          try:
+               payload = request.data
+               payload_json = json.loads(payload)
+               monthly_init = budget(mongodb)
+               create_budget = monthly_init.create(payload_json) 
+               resp = json.dumps(create_budget, indent=2, sort_keys=True)
+          except Exception as e:
+               resp="Error! %s " % e
+     else:
+          resp = render_template('log_in.html')#json.dumps(message)
+     return resp
 
+@app.route("/home/<token>/monthly_budget", methods = [ 'OPTIONS' ] )
+def budget_options(token):
+     return ""
 
 
 if __name__ == "__main__":
-    #app.run(debug=True)
-    app.run(host='192.168.1.76')
+    app.run(debug=True)
+
