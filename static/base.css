@@ -91,6 +91,7 @@ body {
 
 #budget_amount[disabled]{
     cursor: not-allowed;
+    background-color: #82caff;
 }
 
 .drop_amount[disabled]{
@@ -98,15 +99,36 @@ body {
     background-color: #82caff;
 }
 
+
+
 #pounds_pesos[disabled]{
     cursor: not-allowed;
-    
+    background-color: #82caff;
 }
 
 #month[disabled]{
     cursor: not-allowed;
-    
+    background-color: #82caff;
 }
+
+#total_budget{
+    color:red;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+    padding: 0px 0px 0px 5px;
+    width:100px;
+}
+
+#amount_alloc{
+    color:red;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+    padding: 0px 0px 0px 5px;
+    width:100px;
+}
+
 
 #remaining{
     color:red;
@@ -114,7 +136,18 @@ body {
     border-radius: 4px;
     box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
     padding: 0px 0px 0px 5px;
+    width:100px;
 }
+
+#total_pounds{
+    color:red;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+    padding: 0px 0px 0px 5px;
+    width:100px;
+}
+
 
 .input_amount{
 

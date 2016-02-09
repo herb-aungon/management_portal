@@ -3,15 +3,34 @@
    {{ super() }}
 
 <div id="left_menu">
-  <ul class="nav nav-pills nav-stacked">
-    <li>
-      <a href="#" class="sub_link_left">View Monthly BreakDown</a>
-    </li>
-    <li>
-      <a href="#" class="sub_link_left">View Monthly Housing Expenses</a>
-    </li>
+  <!-- <ul class="nav nav-pills nav-stacked"> -->
+  <!--   <li> -->
+  <!--     <a href="#" class="sub_link_left">View Monthly BreakDown</a> -->
+  <!--   </li> -->
+  <!--   <li> -->
+  <!--     <a href="#" class="sub_link_left">View Monthly Housing Expenses</a> -->
+  <!--   </li> -->
     
-  </ul>
+  <!-- </ul> -->
+
+  <div id="amount_remaining">
+      	<label class="label_amount">Budget:
+	  <input type="text"  id="total_budget" value="0" disabled />
+	</label>
+
+  	<label class="label_amount">Amount Remaining:
+	  <input type="text"  id="remaining" value="0" disabled />
+	</label>
+
+	<label class="label_amount">Amount Allocated:
+	  <input type="text" id="amount_alloc" value="0" disabled />
+	</label>
+
+
+	<label class="label_amount">Total Amount(£):
+	  <input type="text" id="total_pounds" value="0" disabled />
+	</label>
+  </div>
 </div>
 
 <div id="left_content">
@@ -44,18 +63,18 @@
       <div class="col-md-8" id="form_container">
 	<label class="label_amount">Amount(Pesos):
 	  <select id="budget_amount">
-      	    <option selected>0</option>
+      	    <option selected>Set Budget</option>
 	  </select>
 	</label>
 	
 	<label class="label_rate" id="rate_label">Rate Pounds-Pesos:
 	  <select id="pounds_pesos">
-      	    <option selected>0</option>
+      	    <option selected>Set Rate</option>
 	  </select>
 	</label>
 	<label class="label_month" id="month_label" > Select Month:
 	  <select id="month" disabled>
-	    <option selected>Month</option>
+	    <option selected>Select Month</option>
 	    <option >January</option>
 	    <option >February</option>
 	    <option >March</option>
@@ -71,13 +90,6 @@
 	  </select>
 	</label>
 	
-	<label class="label_amount">Amount Remaining:
-	  <input type="text"  id="remaining" value="0" disabled />
-	</label>
-
-	<label class="label_amount">Total Amount(Pounds):
-	  <input type="text" id="total_pounds" value="0" class="input_amount" disabled />
-	</label>
 
       </div>
       

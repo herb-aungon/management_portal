@@ -120,15 +120,24 @@ $( document ).ready(function() {
     });
 
     $('#budget_amount').on('change', function() {
+	document.getElementById("total_budget").value = $("#budget_amount").val();
 	document.getElementById("remaining").value = $("#budget_amount").val();
+	
 	var id = "#" + $(this).attr("id");
 	$(id).prop("disabled", true);
 	// $("#pounds_pesos").prop("disabled", false);
 
+	for (amount =50; amount < document.getElementById("total_budget").value; amount += 50) {
+	    $('.drop_amount').append( new Option(amount) );
+	}
+
+	
+
     });
     $('#pounds_pesos').on('change', function() {
 	var total_pounds = $("#budget_amount").val() / parseInt($(this).val());
-	document.getElementById("total_pounds").value = total_pounds 
+	document.getElementById("total_pounds").value = total_pounds.toFixed(2);
+	// console.log(total_pounds.toFixed(2));
 	$("#pounds_pesos").prop("disabled", true);
 	// $("#month_label").show();
 	$("#month").prop("disabled", false);
@@ -136,7 +145,6 @@ $( document ).ready(function() {
 
     $('#month').on('change', function() {
 	$(".drop_amount").prop("disabled", false);
-
     });
 
 
@@ -144,10 +152,43 @@ $( document ).ready(function() {
     $('.drop_amount').on('change', function() {
 	var id = "#" + $(this).attr("id");
 	// console.log(id);
-	$(this).prop("disabled", true);
-	
-	var remaining = parseInt(document.getElementById("remaining").value) - $(this).val();
+	// $(this).prop("disabled", true);
+	// var remaining_int = parseInt(document.getElementById("remaining").value);
+	// var remaining = remaining_int - $(this).val()
+	// document.getElementById("remaining").value = remaining;
+	// document.getElementById("amount_alloc").value = $(this).val();
+	var remaining_int = parseInt(document.getElementById("remaining").value);
+
+	var remaining = remaining_int - $(this).val();
 	document.getElementById("remaining").value = remaining;
+	
+
+	if(parseInt(document.getElementById("remaining").value)==0){	    
+	    $(".drop_amount").prop("disabled", true);
+	    document.getElementById("amount_alloc").value = parseInt(document.getElementById("amount_alloc").value) +  parseInt($(this).val());
+	    // alert("Amount remaining less than 0");
+	}else if(parseInt(document.getElementById("remaining").value)<0){
+	    alert("Allocated amount is more than the budget!");
+	    $(this).prop("disabled", false);
+	    console.log("invalid");
+	    var recal_amount_remaining = parseInt(document.getElementById("total_budget").value) - parseInt(document.getElementById("amount_alloc").value);
+	    document.getElementById("remaining").value = recal_amount_remaining;;
+	}else{
+	    $(this).prop("disabled", true);
+	    console.log("valid");
+
+	    
+	    if(parseInt(document.getElementById("amount_alloc").value)==0){
+	    	document.getElementById("amount_alloc").value = $(this).val();
+	    }else{
+	    	 document.getElementById("amount_alloc").value = parseInt(document.getElementById("amount_alloc").value) +  parseInt($(this).val());
+	    }
+	    
+	}
+
+	
+
+	// document.getElementById("remaining").value = remaining;
     });
 
     
