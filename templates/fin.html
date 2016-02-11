@@ -12,8 +12,10 @@
   <!--   </li> -->
     
   <!-- </ul> -->
+  <form  id="budget_cal" >
+    <fieldset>
 
-  <div id="amount_remaining">
+      <div id="amount_remaining">
       	<label class="label_amount">Budget:
 	  <input type="text"  id="total_budget" value="0" disabled />
 	</label>
@@ -21,7 +23,7 @@
   	<label class="label_amount">Amount Remaining:
 	  <input type="text"  id="remaining" value="0" disabled />
 	</label>
-
+	
 	<label class="label_amount">Amount Allocated:
 	  <input type="text" id="amount_alloc" value="0" disabled />
 	</label>
@@ -30,13 +32,80 @@
 	<label class="label_amount">Total Amount(£):
 	  <input type="text" id="total_pounds" value="0" disabled />
 	</label>
-  </div>
+
+	<div class="add">
+	    <input type="text" id="new_member" placeholder="Enter Name" />
+	    <a href="#" class="btn btn-success" id="add">Add Member</a>
+	</div>
+	<!-- <div class="left_btn"><a href="#" class="btn btn-success" id="save">Save</a></div> -->
+	<!-- <div class="left_btn"><a href="#" class="btn btn-warning" id="clear">Clear</a></div> -->
+	<!-- <div class="left_btn"><a href="#" class="btn btn-danger" id="reset">Reset All</a></div> -->
+      </div>
+  
+    </fieldset>
+  </form>
+
+  
+  <form  id="left_monthly" hidden>
+    <fieldset>
+
+      <div id="monthly_links">
+
+	<ul class="nav nav-pills nav-stacked">
+	  <li>
+	    <a href="#" class="sub_link_left" id="January">January</a>
+	  </li>
+	  <li>
+	    <a href="#" class="sub_link_left" id="February">February</a>
+	  </li>
+	  <li>
+	    <a href="#" class="sub_link_left" id="March">March</a>
+	  </li>
+	  <li>
+	    <a href="#" class="sub_link_left" id="April">April</a>
+	  </li>
+	  <li>
+	    <a href="#" class="sub_link_left" id="May">May</a>
+	  </li>
+    	  <li>
+	    <a href="#" class="sub_link_left" id="June">June</a>
+	  </li>
+    	  <li>
+	    <a href="#" class="sub_link_left" id="July">July</a>
+	  </li>
+    	  <li>
+	    <a href="#" class="sub_link_left" id="August">August</a>
+	  </li>
+          <li>
+	    <a href="#" class="sub_link_left" id="September">September</a>
+	  </li>
+    	  <li>
+	    <a href="#" class="sub_link_left" id="October">October</a>
+	  </li>
+	  <li>
+	    <a href="#" class="sub_link_left" id="November">November</a>
+	  </li>
+	  <li>
+	    <a href="#" class="sub_link_left" id="December">December</a>
+	  </li>
+   
+  </ul>
+
+	
+      </div>
+  
+    </fieldset>
+  </form>
+
+
+
+  
 </div>
 
 <div id="left_content">
 
   <a  id="create_budget" href="#" style="margin-right:50px">Create Monthly Budget</a>
-  <a id="view_monthly">Create Housing Budget</a>
+  <a id="view_monthly" href="#">View Monthly Budget</a>
 
   <div class="alert alert-danger budget_msg_ng" hidden>
     <a href="" class="close" data-dismiss="alert" aria-label="close">&times;</a>
@@ -103,13 +172,20 @@
 
 	<br><span class="group-btn">
 	  <a href="#" class="btn btn-success" id="save">Save</a>
-	  <a href="#" class="btn btn-warning" id="clear">Clear</a>
 	  <a href="#" class="btn btn-danger" id="reset">Reset All</a>
+	  <a href="#" class="btn btn-warning" id="close">Close</a>
 	</span>
 	
       </div>
+      
     </fieldset>
   </form>
+
+
+
+  <textarea rows="4" cols="50" id="monthly_val" hidden>
+    {{ food_items }}
+    </textarea>
   
 </div>
 

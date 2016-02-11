@@ -107,7 +107,11 @@ $( document ).ready(function() {
 
 
     $("#create_budget").click(function(){
+	$("#budget_cal").show();
 	$(".budget_form").show();
+	$("#left_monthly").hide();
+	$("#monthly_val").hide();
+	
 	for (amount =50; amount < 20000; amount += 50) {
 	    $('.drop_amount').append( new Option(amount) );
 	}
@@ -192,9 +196,10 @@ $( document ).ready(function() {
     });
 
     
-    $("#clear").click(function(){
-	$('.drop_amount').prop('selectedIndex', 0);
-	$(".drop_amount").prop("disabled", false);
+    $("#close").click(function(){
+	$(".budget_form").hide();
+	// $('.drop_amount').prop('selectedIndex', 0);
+	// $(".drop_amount").prop("disabled", false);
     })
 
     
@@ -262,6 +267,83 @@ $( document ).ready(function() {
 	
     });
 
+
+
+    $("#add").click(function(){
+	var new_raw ={};
+	new_raw["name"]=$("#new_member").val();
+	var new_member= JSON.stringify(new_raw);
+	console.log(new_member);
+
+	var token = localStorage.getItem("token");
+	var add_url = url + "home/" +token + "/" + "add_member"
+	var message = 0
+	$.ajax({
+	    type : "POST",
+	    url : add_url,
+	    data: new_member,
+	    contentType: 'application/json;charset=UTF-8',
+	    headers: {
+		'X-token':localStorage.getItem("token"),
+		'Content-Type':'application/json'
+	    },
+	    success: function(result, status, xhr) {
+		console.log(result);
+		var result_json = JSON.parse(result);
+		message = result_json['message'];
+
+	    },
+	    async: false
+	});
+	alert(message);
+	location.reload();	
+    });
+
+    $("#view_monthly").click(function(){
+	$(".budget_form").hide();
+	$("#budget_cal").hide();
+	$("#left_monthly").show();
+	$("#monthly_val").show();
+	// $('.drop_amount').prop('selectedIndex', 0);
+	// $(".drop_amount").prop("disabled", false);
+    })
+
+
+
+
+    $(".sub_link_left").click(function(){
+	var month = $(this).attr("id");
+	// var month_raw ={};
+	// month_raw["month"]=$(this).attr("id");
+	// var month= JSON.stringify(month_raw);
+	// console.log(month);
+
+	var token = localStorage.getItem("token");
+	var get_budget_url = url + "home/" +token + "/" + "get_budget/" + month;
+	console.log(get_budget_url);
+	var data = 0
+	$.ajax({
+	    type : "GET",
+	    url : get_budget_url,
+	    contentType: 'application/json;charset=UTF-8',
+	    headers: {
+		'X-token':localStorage.getItem("token"),
+		'Content-Type':'application/json'
+	    },
+	    success: function(result, status, xhr) {
+		console.log(result);
+		data = result;
+		// var result_json = JSON.parse(result);
+		// data = result_json['data'];
+
+	    },
+	    async: false
+	});	
+	$('#monthly_val').val(data);
+
+    });
+    
+    
 });
 
 

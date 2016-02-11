@@ -156,9 +156,59 @@ def budget_post(token):
           resp = render_template('log_in.html')#json.dumps(message)
      return resp
 
+
 @app.route("/home/<token>/monthly_budget", methods = [ 'OPTIONS' ] )
 def budget_options(token):
      return ""
+
+@app.route("/home/<token>/get_budget/<month>", methods = [ 'GET' ] )
+def get_budget(token,month):
+     user_init = user(mongodb)
+     token_check = user_init.token_validator(token)
+     if token_check.get('success')==True:
+          try:
+               monthly_init = budget(mongodb)
+               get_budget = monthly_init.get(month) 
+               resp = json.dumps(get_budget, indent=2, sort_keys=True)
+          except Exception as e:
+               resp="Error! %s " % e
+     else:
+          resp = render_template('log_in.html')#json.dumps(message)
+     return resp
+
+
+@app.route("/home/<token>/get_budget", methods = [ 'OPTIONS' ] )
+def get_budget_options(token):
+     return ''
+
+
+
+
+@app.route("/home/<token>/add_member", methods = [ 'POST' ] )
+def add_POST(token):
+     user_init = user(mongodb)
+     token_check = user_init.token_validator(token)
+     if token_check.get('success')==True:
+          try:
+               payload = request.data
+               payload_json = json.loads(payload)
+               member_init = member(mongodb)
+               add_member = member_init.add(payload_json) 
+               resp = json.dumps(add_member, indent=2, sort_keys=True)
+          except Exception as e:
+               resp="Error! %s " % e
+     else:
+          resp = render_template('log_in.html')#json.dumps(message)
+     return resp
+
+
+
+@app.route("/home/<token>/add_member", methods = [ 'OPTIONS' ] )
+def add_options(token):
+     return ''
+
+
+
 
 
 if __name__ == "__main__":

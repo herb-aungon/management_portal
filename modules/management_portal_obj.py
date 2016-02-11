@@ -100,6 +100,30 @@ class user():
         msg_upd=msg_class.update(resp_data)
         return msg_upd 
 
+
+
+class member():
+    def __init__( self, mongodb ):
+        self.__mongodb = mongodb
+        
+    def add(self,data):
+        msg_class = message()
+        resp_data = {}
+        
+        try:
+            if data.get('name'):
+                self.__mongodb.list_name.insert( dict(data) )
+                resp_data.update({'message':'New Member Added','data':data, 'success':True})
+            else:
+                resp_data.update({'message':'Invalid data!'})
+        except Exception as e:
+            resp_data.update({ 'message':'Failed to add!Reason: %s' % e })
+            
+        msg_upd=msg_class.update(resp_data)
+        return msg_upd 
+            
+
+    
 class budget():
     def __init__( self, mongodb ):
         self.__mongodb = mongodb
@@ -131,7 +155,7 @@ class budget():
                     breakdown.append({ "name":name, "amount":data.get(name) })
 
                 format_data["budget_breakdown"]=breakdown
-
+                self.__mongodb.budget.insert( dict(format_data) )
                 resp_data.update({'message':'Monthly Budget Created', 'data':format_data, 'success':True})
             else:
                 resp_data.update({'message':'data empty!'})
@@ -141,6 +165,26 @@ class budget():
         msg_upd=msg_class.update(resp_data)
         return msg_upd 
 
+
+
+    def get(self,month):
+        msg_class = message()
+        resp_data = {}
+        try:
+            if month != None:
+                budget_found = self.__mongodb.budget.find_one({ 'month':month },{'_id':0})
+                
+                if budget_found != None:
+                    resp_data.update({'message':'Budget found for the month %s' % month, 'data':budget_found, 'success':True})
+                else:
+                    resp_data.update({'message':'No budget found allocated for the month %s' % month, 'success':True})
+            else:
+                resp_data.update({'message':'No month selected!'})
+        except Exception as e:
+            resp_data.update({ 'message':'Failed to create!Reason: %s' % e })
+            
+        msg_upd=msg_class.update(resp_data)
+        return msg_upd 
 
 
 
