@@ -3,9 +3,11 @@
 
 from flask import Flask,request, render_template, flash, jsonify, make_response, Response, url_for, redirect
 from pymongo import MongoClient
-import json, datetime, local_settings, calendar, collections
+import json, local_settings, calendar, collections, pygal
 from modules.management_portal_obj import *
-
+from datetime import *
+from pygal.style import Style
+from pygal import *
 config = local_settings.env
 app = Flask(__name__)
 
@@ -83,14 +85,59 @@ def home_get(token):
      ##token=request.headers.get('X-token')
      user_init = user(mongodb)
      token_check = user_init.token_validator(token)
-     
      if token_check.get('success')==True:
           try:
                data_init = raw_data(mongodb)
                get_data = data_init.get()
                names = get_data.get('data').get('names')
                months =json.dumps(get_data.get('data').get('months'))
-               resp = render_template('fin.html', names=names, months=months)#json.dumps(message)
+               budget_init = chart(mongodb)
+               get_budget = budget_init.get_all()
+               budget = json.dumps(get_budget, default=default_encoder, indent=2, sort_keys = True)
+               month_name=[]
+               for x in get_data.get('data').get('months'):
+                    month_name.append(x.get('name'))
+
+               date_now = datetime.now()
+               year_now = date_now.year - 2
+               years=[]
+               while year_now < date_now.year:
+                    year_counter = year_now + 1
+                    years.append(year_counter)
+                    year_now += 1
+                    
+               line_chart = pygal.Bar(width=840, height=600,
+                                         explicit_size=True,
+                                         disable_xml_declaration=True)
+               
+               line_chart.title = 'Budget Comparison Between Last Year and Current Year'
+               line_chart.x_labels = month_name
+               year_1 =[]
+               year_2 =[]
+               budget_raw = get_budget.get('data')
+               counter = 0
+               current_year = date_now.year - 1
+               while counter < len(years):
+                    year = years[counter]
+
+                    for y in month_name:
+                         month_year = "%s_%s" % (y,year)
+                         month_val=budget_raw.get(month_year)
+
+                         if year == current_year:
+                              if month_val:
+                                   year_1.append(month_val.get('amount_pesos'))
+                              else:
+                                   year_1.append(0)
+                         else:
+                              if month_val:
+                                   year_2.append(month_val.get('amount_pesos'))
+                              else:
+                                   year_2.append(0)
+                    counter += 1
+               line_chart.add(str(years[0]),year_1 )
+               line_chart.add(str(years[1]),year_2 )
+               resp = render_template('finance_page.html', names=names, months=months, chart_test=line_chart, budget=year_2)
           except Exception as e:
                resp="Error! %s " % e
      else:
@@ -161,15 +208,63 @@ def budget_post(token):
 def budget_options(token):
      return ""
 
-@app.route("/home/<token>/get_budget/<month>", methods = [ 'GET' ] )
-def get_budget(token,month):
+@app.route("/home/<token>/get_budget/<month>/<year>", methods = [ 'GET' ] )
+def get_budget(token,month,year):
      user_init = user(mongodb)
      token_check = user_init.token_validator(token)
      if token_check.get('success')==True:
           try:
+               data={"month":month, "year":int(year)}
                monthly_init = budget(mongodb)
-               get_budget = monthly_init.get(month) 
-               resp = json.dumps(get_budget, indent=2, sort_keys=True)
+               get_budget = monthly_init.get(data)
+
+               data_init = raw_data(mongodb)
+               get_data = data_init.get()
+               names = get_data.get('data').get('names')
+
+
+               custom_style = Style(
+                    background='transparent',
+                    plot_background='transparent',
+                    opacity='.6',
+                    opacity_hover='.9',
+                    transition='400ms ease-in',
+                    label_font_size = 12
+               )
+
+                    # value_label_font_size =0,
+
+
+               
+               title = '%s %s Budget Breakdown' % (month, year)
+               line_chart = pygal.HorizontalBar(
+                    width=820,
+                    height=850,
+                    explicit_size=True,
+                    title=title,
+                    style=custom_style,
+                    disable_xml_declaration=True,
+                    show_legend=False
+               )
+               
+               list_name = []
+               for x in names:
+                    list_name.append(x.get('name'))
+               line_chart.x_labels = list_name
+               monthly_breakdown = dict(get_budget.get('data') )
+               budget_val = []
+               test = []
+               for x in list_name:
+                    y = monthly_breakdown.get(x)
+                    budget_val.append(y)
+                    test.append(x)
+                    
+               line_chart.add(str('Name'),budget_val )
+               
+
+               data= json.dumps(get_budget.get('data'), indent=2, sort_keys=True)
+               # resp = render_template('finance_page.html', names=names, months=months, chart_test=line_chart, budget=year_2)
+               resp = render_template('finance_page.html',data=data, monthly_chart=line_chart)
           except Exception as e:
                resp="Error! %s " % e
      else:

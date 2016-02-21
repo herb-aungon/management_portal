@@ -17,7 +17,6 @@ class user():
     def check(self, user_data):
         msg_class = message()
         resp_data = {}
-
         try:
             username = user_data.get('username')
             password = user_data.get('password')
@@ -167,17 +166,22 @@ class budget():
 
 
 
-    def get(self,month):
+    def get(self,data):
         msg_class = message()
         resp_data = {}
         try:
-            if month != None:
-                budget_found = self.__mongodb.budget.find_one({ 'month':month },{'_id':0})
+            if data != None:
+                month = data.get("month")
+                year =  data.get("year")
+                budget_found = self.__mongodb.budget.find_one({ 'month':month, 'year':year },{'_id':0})
                 
                 if budget_found != None:
-                    resp_data.update({'message':'Budget found for the month %s' % month, 'data':budget_found, 'success':True})
+                    data = {}
+                    for x in budget_found.get('budget_breakdown'):
+                        data.update({ x.get('name'):x.get('amount') })
+                    resp_data.update({'message':'Budget found for the month %s %s' % (month, year), 'data':data, 'success':True})
                 else:
-                    resp_data.update({'message':'No budget found allocated for the month %s' % month, 'success':True})
+                    resp_data.update({'message':'No budget found allocated for the month %s %s' % (month, year), 'success':True})
             else:
                 resp_data.update({'message':'No month selected!'})
         except Exception as e:
@@ -187,7 +191,47 @@ class budget():
         return msg_upd 
 
 
+class chart():
+    def __init__( self, mongodb ):
+        self.__mongodb = mongodb
+        
+    def get_all(self):
+        msg_class = message()
+        resp_data = {}
+        try:
+            formatted_data = {}
+            budget = self.__mongodb.budget.find({}, {"_id":0,"budget_breakdown":0} )
+            
+            raw = []
+            for x in budget:
+                raw.append(x)
+                
+            counter = 0
+            while counter < len(raw):
+                monthly_bud = {
+                    "month":raw[counter].get("month"),
+                    "amount_pesos":raw[counter].get("amount_pesos"),
+                    "year":raw[counter].get("year"),
+                }
+                year_month = "%s_%s" % ( raw[counter].get("month"),raw[counter].get("year") )
+                formatted_data.update( { year_month:monthly_bud } )
+                counter += 1
+            
+            
+            if budget == None:
+                resp_data.update({'message':'No data Found'})
+            else:
+                resp_data.update({'message':'Budget data found','data':formatted_data, 'success':True})
 
+        except Exception as e:
+            resp_data.update({ 'message':'Failed to find budget data!Reason: %s' % e })
+            
+        msg_upd=msg_class.update(resp_data)
+        return msg_upd 
+
+
+
+    
 class raw_data():
     def __init__( self, mongodb ):
         self.__mongodb = mongodb

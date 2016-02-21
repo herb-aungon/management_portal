@@ -111,6 +111,7 @@ $( document ).ready(function() {
 	$(".budget_form").show();
 	$("#left_monthly").hide();
 	$("#monthly_val").hide();
+	$("#chart").hide();
 	
 	for (amount =50; amount < 20000; amount += 50) {
 	    $('.drop_amount').append( new Option(amount) );
@@ -234,7 +235,7 @@ $( document ).ready(function() {
 
 	
 	if(document.getElementById("remaining").value==0){
-	    console.log("valid");
+	    console.log("valid")
 	    var token = localStorage.getItem("token");
 	    var budget_url = url + "home/" +token + "/" + "monthly_budget"
 	    $.ajax({
@@ -304,6 +305,11 @@ $( document ).ready(function() {
 	$("#budget_cal").hide();
 	$("#left_monthly").show();
 	$("#monthly_val").show();
+	$("#chart").show();
+	var token = localStorage.getItem("token");
+	url_home = url + 'home/' + token;
+	window.location.href = url_home;
+
 	// $('.drop_amount').prop('selectedIndex', 0);
 	// $(".drop_amount").prop("disabled", false);
     })
@@ -313,37 +319,32 @@ $( document ).ready(function() {
 
     $(".sub_link_left").click(function(){
 	var month = $(this).attr("id");
+	var selected_year = parseInt($("#year").val());
+	$("#chart").hide();
 	// var month_raw ={};
 	// month_raw["month"]=$(this).attr("id");
 	// var month= JSON.stringify(month_raw);
 	// console.log(month);
 
 	var token = localStorage.getItem("token");
-	var get_budget_url = url + "home/" +token + "/" + "get_budget/" + month;
+	var get_budget_url = url + "home/" +token + "/" + "get_budget/" + month + "/" + selected_year;
 	console.log(get_budget_url);
-	var data = 0
-	$.ajax({
-	    type : "GET",
-	    url : get_budget_url,
-	    contentType: 'application/json;charset=UTF-8',
-	    headers: {
-		'X-token':localStorage.getItem("token"),
-		'Content-Type':'application/json'
-	    },
-	    success: function(result, status, xhr) {
-		console.log(result);
-		data = result;
-		// var result_json = JSON.parse(result);
-		// data = result_json['data'];
-
-	    },
-	    async: false
-	});	
-	$('#monthly_val').val(data);
-
+	budget_url = get_budget_url;
+	console.log(budget_url);
+	window.location.href = budget_url;
     });
     
-    
+
+    //set year
+    var current_date = new Date();
+    var current_year = current_date.getFullYear();
+    var pre_year = current_year -1;
+    // console.log(pre_year);
+    // $("#year").val(current_year);
+    // $('#year').prop('selectedIndex', current_year);
+    $('#year').append( new Option(current_year) );
+    $('#year').append( new Option(pre_year) );
+
 });
 
 
