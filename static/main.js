@@ -50,11 +50,7 @@ $( document ).ready(function() {
 	    async: false
 	});
 
-	//console.log(stat);
-	//var test = localStorage.getItem("success_msg")
 	if(success_msg==true){
-	    //console.log(success_msg);
-	    //console.log(message);
 	    url_get = url + 'home/' + token
 	    console.log(url_get);
 	    window.location.href = url_get;
@@ -156,12 +152,6 @@ $( document ).ready(function() {
     
     $('.drop_amount').on('change', function() {
 	var id = "#" + $(this).attr("id");
-	// console.log(id);
-	// $(this).prop("disabled", true);
-	// var remaining_int = parseInt(document.getElementById("remaining").value);
-	// var remaining = remaining_int - $(this).val()
-	// document.getElementById("remaining").value = remaining;
-	// document.getElementById("amount_alloc").value = $(this).val();
 	var remaining_int = parseInt(document.getElementById("remaining").value);
 
 	var remaining = remaining_int - $(this).val();
@@ -191,16 +181,11 @@ $( document ).ready(function() {
 	    
 	}
 
-	
-
-	// document.getElementById("remaining").value = remaining;
     });
 
     
     $("#close").click(function(){
 	$(".budget_form").hide();
-	// $('.drop_amount').prop('selectedIndex', 0);
-	// $(".drop_amount").prop("disabled", false);
     })
 
     
@@ -309,9 +294,6 @@ $( document ).ready(function() {
 	var token = localStorage.getItem("token");
 	url_home = url + 'home/' + token;
 	window.location.href = url_home;
-
-	// $('.drop_amount').prop('selectedIndex', 0);
-	// $(".drop_amount").prop("disabled", false);
     })
 
 
@@ -321,10 +303,6 @@ $( document ).ready(function() {
 	var month = $(this).attr("id");
 	var selected_year = parseInt($("#year").val());
 	$("#chart").hide();
-	// var month_raw ={};
-	// month_raw["month"]=$(this).attr("id");
-	// var month= JSON.stringify(month_raw);
-	// console.log(month);
 
 	var token = localStorage.getItem("token");
 	var get_budget_url = url + "home/" +token + "/" + "get_budget/" + month + "/" + selected_year;
@@ -333,17 +311,80 @@ $( document ).ready(function() {
 	console.log(budget_url);
 	window.location.href = budget_url;
     });
-    
-
-    //set year
+    //set current year
     var current_date = new Date();
     var current_year = current_date.getFullYear();
     var pre_year = current_year -1;
-    // console.log(pre_year);
-    // $("#year").val(current_year);
-    // $('#year').prop('selectedIndex', current_year);
     $('#year').append( new Option(current_year) );
     $('#year').append( new Option(pre_year) );
+
+
+    $("#workout").click(function(){
+	var token = localStorage.getItem("token");
+	url_workout = url + 'home/' + token + '/workout';
+	window.location.href = url_workout;
+    })
+
+    $("#finance").click(function(){
+	var token = localStorage.getItem("token");
+	url_home = url + 'home/' + token;
+	window.location.href = url_home;
+    })
+
+// workout javasript
+    $("#profile").click(function(){
+	$("#workout_frm").show();
+    })
+    $("#close_prof").click(function(){
+	$("#workout_frm").hide();
+	// need to add redirect link for view workout page
+    })
+
+    $('#create_workout').click(function(){
+	var data_wkr = null;
+	var token = localStorage.getItem("token")
+	var get_template_url = url + "home/" + token + "/create_workout";
+	//console.log(user);
+
+	stats = "getting template from " + get_template_url;
+	console.log(stats);
+
+	//Getting template
+	$.ajax({
+	    type : "GET",
+	    url : get_template_url,
+	    data: null,
+	    contentType: 'application/json;charset=UTF-8',
+	    headers: {
+		'Content-Type':'application/json'
+	    },
+	    success: function(result, status, xhr) {
+		// console.log(result);
+		//console.log(token);
+		var result_json = JSON.parse(result);
+		console.log(result_json);
+		message = result_json['message'];
+		localStorage.setItem("message", message);
+		console.log(message);
+		data_wrk = result_json['data'];
+		localStorage.setItem("data_wrk", data_wrk);
+		console.log(data_wrk);
+	    },
+	    async: false
+	});
+	// if(success_msg==true){
+	//     url_get = url + 'home/' + token
+	//     console.log(url_get);
+	//     window.location.href = url_get;
+
+	// }else{
+	//     console.log(message);
+	//     //location.reload();
+	//     $("#neg_msg_val").text(message)
+	//     $(".negative_msg").show();
+	// }
+	
+    });
 
 });
 

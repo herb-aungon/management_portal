@@ -105,10 +105,24 @@ def home_get(token):
                     year_counter = year_now + 1
                     years.append(year_counter)
                     year_now += 1
+
+               custom_style = Style(
+                    background='transparent',
+                    plot_background='transparent',
+                    opacity='.6',
+                    opacity_hover='.9',
+                    transition='400ms ease-in',
+                    label_font_size = 13,
+                    major_label_font_size=15
+               )
+
                     
-               line_chart = pygal.Bar(width=840, height=600,
-                                         explicit_size=True,
-                                         disable_xml_declaration=True)
+               line_chart = pygal.Bar(
+                    width=1040, height=600,
+                    # explicit_size=True,
+                    style=custom_style,
+                    disable_xml_declaration=True
+               )
                
                line_chart.title = 'Budget Comparison Between Last Year and Current Year'
                line_chart.x_labels = month_name
@@ -238,7 +252,7 @@ def get_budget(token,month,year):
                
                title = '%s %s Budget Breakdown' % (month, year)
                line_chart = pygal.HorizontalBar(
-                    width=820,
+                    width=1220,
                     height=850,
                     explicit_size=True,
                     title=title,
@@ -253,7 +267,6 @@ def get_budget(token,month,year):
                line_chart.x_labels = list_name
                monthly_breakdown = dict(get_budget.get('data') )
                budget_val = []
-               test = []
                for x in list_name:
                     y = monthly_breakdown.get(x)
                     budget_val.append(y)
@@ -271,6 +284,24 @@ def get_budget(token,month,year):
           resp = render_template('log_in.html')#json.dumps(message)
      return resp
 
+
+@app.route("/home/<token>/workout", methods = [ 'GET' ] )
+def workout_get(token):
+     user_init = user(mongodb)
+     token_check = user_init.token_validator(token)
+     if token_check.get('success')==True:
+          try:
+               resp=render_template('workout_management.html')#json.dumps(message)
+          except Exception as e:
+               resp="Error! %s " % e
+     else:
+          resp = render_template('login.html')#json.dumps(message)
+     return resp
+
+
+@app.route("/home/<token>/workout", methods = [ 'OPTIONS' ] )
+def workout_options(token):
+     return ''
 
 @app.route("/home/<token>/get_budget", methods = [ 'OPTIONS' ] )
 def get_budget_options(token):
@@ -302,7 +333,26 @@ def add_POST(token):
 def add_options(token):
      return ''
 
+##workout routes##
+@app.route("/home/<token>/create_workout", methods = [ 'GET' ] )
+def workout_temp_get(token):
+     user_init = user(mongodb)
+     token_check = user_init.token_validator(token)
+     if token_check.get('success')==True:
+          try:
+               workout_init = workout(mongodb)
+               get_temp = workout_init.get()
+               resp = json.dumps(get_temp, indent=2, sort_keys = True)
+               
+          except Exception as e:
+               resp="Error! %s " % e
+     else:
+          resp = render_template('log_in.html')#json.dumps(message)
+     return resp
 
+@app.route("/home/<token>/create_workout", methods = [ 'OPTIONS' ] )
+def workout_temp_options(token):
+     return ''
 
 
 

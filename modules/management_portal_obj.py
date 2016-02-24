@@ -255,3 +255,25 @@ class raw_data():
         msg_upd=msg_class.update(resp_data)
         return msg_upd 
         
+
+
+
+class workout():
+    def __init__( self, mongodb ):
+        self.__mongodb = mongodb
+
+    def get(self):
+        msg_class = message()
+        resp_data = {}
+        try:
+            template_raw = self.__mongodb.workout_template.find({},{'_id':0})
+            template=[]
+            for n in template_raw:
+                template.append(n)
+            resp_data.update({'message':'data returned', 'success':True, 'data':template })
+        except Exception as e:
+            resp_data.update({ 'message':'No data Found!Reason:%s' % e })
+            
+        msg_upd=msg_class.update(resp_data)
+        return msg_upd 
+        

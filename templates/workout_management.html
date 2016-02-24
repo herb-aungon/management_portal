@@ -1,0 +1,150 @@
+{% extends "base.html" %}
+{% block workout %}
+   {{ super() }}
+
+<div id="left_menu">
+  
+  <form  id="add_workout" hidden>
+    <fieldset>
+
+      <div id="workout_type">
+	<label class="label_month">workout_type:
+    	  <select id="Type">
+	  </select>
+	</label>
+
+
+  	<label class="label_amount">Workout:
+	  <input type="text"  id="workout_name"/>
+	</label>
+	<a href="#" class="btn btn-success" id="add">Add Workout</a>
+
+      </div>
+  
+    </fieldset>
+  </form>
+
+  <div id="year_div">
+    <label class="label_month">Year:
+      <select id="year">
+      </select>
+    </label>
+  </div>
+  
+  <form  id="workout_type">
+    <fieldset>
+
+      <div id="monthly_workout">
+
+	<ul class="nav nav-pills nav-stacked">
+	  <li>
+	    <a href="#" class="month_workout" id="January">January</a>
+	  </li>
+	  <li>
+	    <a href="#" class="month_workout" id="February">February</a>
+	  </li>
+	  <li>
+	    <a href="#" class="month_workout" id="March">March</a>
+	  </li>
+	  <li>
+	    <a href="#" class="month_workout" id="April">April</a>
+	  </li>
+	  <li>
+	    <a href="#" class="month_workout" id="May">May</a>
+	  </li>
+	  <li>
+	    <a href="#" class="month_workout" id="June">June</a>
+	  </li>
+	  <li>
+	    <a href="#" class="month_workout" id="July">July</a>
+	  </li>
+	  <li>
+	    <a href="#" class="month_workout" id="August">August</a>
+	  </li>
+	  <li>
+	    <a href="#" class="month_workout" id="September">September</a>
+	  </li>
+	  <li>
+	    <a href="#" class="month_workout" id="October">October</a>
+	  </li>
+	  <li>
+	    <a href="#" class="month_workout" id="November">November</a>
+	  </li>
+	  <li>
+	    <a href="#" class="month_workout" id="December">December</a>
+	  </li>
+
+	    </ul>
+      </div>
+	
+    </fieldset>
+  </form>
+
+
+
+  
+</div>
+
+<div id="right_content">
+
+  <a  id="create_workout" href="#" style="margin-right:50px; margin-left:20px;">Create Workout</a>
+  <a id="view_workout" href="#" style="margin-right:50px; margin-left:20px;">View Workout</a>
+  <a id="profile" href="#">Add/View Profile</a>
+  
+  <!-- view monthly page -->
+  <div id="workout_comp"><h1>Workout Comparison</h1></div>
+  
+  <!-- view monthly page -->
+  <div id="create_workout_div">
+
+<div class="col-md-10 create_workout_frm">
+  <textarea rows="4" cols="50" id="template_wrk" show>
+  </textarea>
+</div>
+
+    <form class="form-horizontal" id="workout_frm" hidden> <!-- hidden -->
+      <fieldset>
+	<div class="col-md-4" id="workout_container">
+	  
+	  <label class="label_workout">Name:
+	    <input type="text" id="name_wrk" class="workout_input" placeholder="Enter Name" />
+	  </label>
+	  
+	  <label class="label_workout">Bicep:
+	    <input type="text" id="bicep_msr" class="workout_input" placeholder="bicep size (inches)" />
+	  </label>
+	  
+	  <label class="label_workout">Chest:
+	    <input type="text" id="chest_msr" class="workout_input" placeholder="chest size (inches)" />  
+	  </label>
+
+	  <label class="label_workout">Waist:
+	    <input type="text" id="waist_msr" class="workout_input" placeholder="waistline (inches)" />
+	  </label>
+
+
+	  <label class="label_workout">Weight:
+	    <input type="text" id="weight_msr" class="workout_input" placeholder="weight in kg" />
+	  </label>
+
+	</div>
+
+
+      </fieldset>
+          <div class="btn_profile">
+	    <a href="#" class="btn btn-success" id="add_prof">Add Profile</a>
+	    <a href="#" class="btn btn-danger" id="clear">Clear</a>
+	    <a href="#" class="btn btn-warning" id="close_prof">Close</a>
+	  </div>
+	  
+    </formxs>
+
+
+
+    
+  </div>
+  
+
+  
+</div>  
+  {% endblock %}
