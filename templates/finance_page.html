@@ -11,7 +11,7 @@
 	  <input type="text"  id="total_budget" value="0" disabled />
 	</label>
 
-  	<label class="label_amount">Amount Remaining:
+	<label class="label_amount">Amount Remaining:
 	  <input type="text"  id="remaining" value="0" disabled />
 	</label>
 	
@@ -169,23 +169,24 @@
       
     </fieldset>
   </form>
+
   {% if  chart_test %}
   <div id="chart">
     {{chart_test.render()|safe}}
   </div>
 
-  <textarea rows="4" cols="50" id="monthly_val" show>
-    {{ budget }}
-  </textarea>
-  {% endif %}
+  <!-- <textarea rows="4" cols="50" id="monthly_val" show> -->
+  <!--   {{ budget }} -->
+  <!-- </textarea> -->
+  <!-- {% endif %} -->
   {% if  monthly_chart %}
   <div id="monthly_chart">
     {{monthly_chart.render()|safe}}
   </div>
 
-  <textarea rows="4" cols="50" id="monthly_val" show>
-    {{ data }}
-  </textarea>
+  <!-- <textarea rows="4" cols="50" id="monthly_val" show> -->
+  <!--   {{ data }} -->
+  <!-- </textarea> -->
 
   {% endif %}
   

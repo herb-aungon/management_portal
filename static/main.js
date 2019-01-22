@@ -318,7 +318,7 @@ $( document ).ready(function() {
     $('#year').append( new Option(current_year) );
     $('#year').append( new Option(pre_year) );
 
-
+    //nav bar click function
     $("#workout").click(function(){
 	var token = localStorage.getItem("token");
 	url_workout = url + 'home/' + token + '/workout';
@@ -331,9 +331,18 @@ $( document ).ready(function() {
 	window.location.href = url_home;
     })
 
+
+    $("#health").click(function(){
+	var token = localStorage.getItem("token");
+	url_home = url + 'home/' + token + '/health';
+	window.location.href = url_home;
+    })
+
+    
 // workout javasript
     $("#profile").click(function(){
 	$("#workout_frm").show();
+	$("#create_wrk").hide();
     })
     $("#close_prof").click(function(){
 	$("#workout_frm").hide();
@@ -341,6 +350,8 @@ $( document ).ready(function() {
     })
 
     $('#create_workout').click(function(){
+	$("#create_wrk").show();
+	$("#workout_frm").hide();
 	var data_wkr = null;
 	var token = localStorage.getItem("token")
 	var get_template_url = url + "home/" + token + "/create_workout";
@@ -348,44 +359,109 @@ $( document ).ready(function() {
 
 	stats = "getting template from " + get_template_url;
 	console.log(stats);
-
-	//Getting template
-	$.ajax({
-	    type : "GET",
-	    url : get_template_url,
-	    data: null,
-	    contentType: 'application/json;charset=UTF-8',
-	    headers: {
-		'Content-Type':'application/json'
-	    },
-	    success: function(result, status, xhr) {
-		// console.log(result);
-		//console.log(token);
-		var result_json = JSON.parse(result);
-		console.log(result_json);
-		message = result_json['message'];
-		localStorage.setItem("message", message);
-		console.log(message);
-		data_wrk = result_json['data'];
-		localStorage.setItem("data_wrk", data_wrk);
-		console.log(data_wrk);
-	    },
-	    async: false
-	});
-	// if(success_msg==true){
-	//     url_get = url + 'home/' + token
-	//     console.log(url_get);
-	//     window.location.href = url_get;
-
-	// }else{
-	//     console.log(message);
-	//     //location.reload();
-	//     $("#neg_msg_val").text(message)
-	//     $(".negative_msg").show();
-	// }
 	
     });
 
+
+    $('#wrk_type').on('change', function() {
+	$("#wrk_name").prop("disabled", false);
+	var workout_type = $(this).val();
+	console.log(workout_type);
+
+	if(workout_type=="chest"){
+	    console.log("chest");
+	    $('#wrk_name').empty();;
+	    var chest = [
+		"decline bench press",
+		"incline bench press",
+		"flat bench press",
+		"decline dumbell press",
+		"incline dumbell press",
+		"flat dumbell press",
+		"push up"
+	    ];
+
+	    $.each(chest, function(x,y) {
+		
+		$('#wrk_name').append( new Option(y) );
+	    });
+
+	}else if(workout_type=="bicep") {
+	    console.log("bicep")
+	    $('#wrk_name').empty();;
+	    var bicep = [
+		"Hammer curl",
+		"21",
+		"alternate dumbell curl",
+		"ez bar curl"
+	    ];
+	    
+	    $.each(bicep, function(x,y) {
+		$('#wrk_name').append( new Option(y) );
+	    });
+	    
+	}else if(workout_type=="cardio") {
+	    console.log("cardio");
+	    $('#wrk_name').empty();;
+	    var cardio = [
+		"jogging",
+		"stationary cycling",
+		"jump ropes",
+		"boxing"
+	    ];
+	    $.each(cardio, function(x,y) {
+		$('#wrk_name').append( new Option(y) );
+	    });
+	    
+	}else if(workout_type=="legs") {
+	    console.log("legs");
+	    $('#wrk_name').empty();;
+	    var legs = [
+		"dumbell squats",
+		"barbell squats",
+		"body weight squats"
+	    ];
+	    $.each(legs, function(x,y) {
+		$('#wrk_name').append( new Option(y) );
+	    });
+
+	    
+	}else{
+	    console.log("abs");
+	    $('#wrk_name').empty();;
+	    var abs = [
+		"planks",
+		"crunches",
+		"scissor kick crunch",
+		"bicycle crunch"
+	    ];
+	    $.each(abs, function(x,y) {
+		$('#wrk_name').append( new Option(y) );
+	    });
+
+	}
+
+
+	
+    });
+
+    //datepicker
+    $(function() {
+	$( "#datepicker" ).datepicker();
+
+
+	//loop for generating dropdown values for sugar level
+	for (amount =1; amount < 26; amount += 1) {
+	    $('#set_slevel').append( new Option(amount) );
+	}
+	$('#set_slevel').append( new Option("unreadable") );
+
+
+    });
+
+
+
+    
 });
 
 

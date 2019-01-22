@@ -1,3 +1,4 @@
+
 {% extends "base.html" %}
 {% block workout %}
    {{ super() }}
@@ -87,89 +88,41 @@
 
 <div id="right_content">
 
-  <a  id="create_workout" href="#" style="margin-right:50px; margin-left:20px;">Create Workout</a>
-  <a id="view_workout" href="#" style="margin-right:50px; margin-left:20px;">View Workout</a>
-  <a id="profile" href="#">Add/View Profile</a>
-  
-  <!-- view monthly page -->
-  <!-- <div id="workout_comp"><h1>Workout Comparison</h1></div> -->
-  
-  <!-- view monthly page -->
-  <div id="create_workout_div">
+  <a  id="record_slevel" href="#" style="margin-right:50px; margin-left:20px;">Record Sugar Level</a>
+  <a id="record_wbp" href="#" style="margin-right:50px; margin-left:20px;">Compare Sugar Levels (Monthly)</a>
 
-    <div class="col-md-10 create_workout_frm">
+  <!-- Record sugar level section -->
+  <div id="add sugar level" style="margin-top:20px">
+
+    <div class="col-md-10 add_sugar_level">
       
-      <form class="form-horizontal" id="create_wrk">
+      <form class="form-horizontal" id="add_slevel">
 	<fieldset>
-
-	  <!-- Form Name -->
-	  <legend>Form Name</legend>
-
-	  <!-- Select Basic -->
-	  <div class="form-group">
-	    <label class="col-md-4 control-label" for="selectbasic">Workout Type</label>
-	    <div class="col-md-4">
-	      <select id="wrk_type" class="workout_dropdown">
-		<option value="Select Workout Type" selected>Select Workout Type</option>
-		<option value="chest">Chest</option>
-		<option value="bicep">Bicep</option>
-		<option value="abs">Abs</option>
-		<option value="legs">Legs</option>
-		<option value="cardio">cardio</option>
-	      </select>
-	    </div>
-	  </div>
-
-
-	  <div class="form-group">
-	    <label class="col-md-4 control-label" for="selectbasic">Workout Name</label>
-	    <div class="col-md-4">
-	      <select id="wrk_name" class="workout_dropdown cus_drop_down" disabled>
-	      </select>
-
-	    </div>
-	  </div>
-
-
 	  
-	  <!-- Text input-->
+	  <!-- drop down for s level-->
 	  <div class="form-group">
-	    <label class="col-md-4 control-label" for="textinput">Weight in Kg</label>
-	    <div class="col-md-4">
-	      <input id="weight_kg" name="textinput" type="text" placeholder="Enter weight in Kg" class="form-control input-md custom_input">
-	    </div>
-	  </div>
+	    <label class="col-md-2 control-label" for="textinput">Sugar Level</label>
+	    <div class="col-md-2">
+	      <select id="set_slevel" class="form-control input-md custom_input">
+		<option selected > Set Sugar Level </option>
 
-		  
-	  <div class="form-group">
-	    <label class="col-md-4 control-label" for="textinput">No. of Reps</label>
-	    <div class="col-md-4">
-	      <input id="reps" name="textinput" type="text" placeholder="Enter no of repeatiton" class="form-control input-md custom_input">
+	      </select>
 	    </div>
 	  </div>
 
 	  <div class="form-group">
-	    <label class="col-md-4 control-label" for="textinput">Rest Time</label>
-	    <div class="col-md-4">
-	      <input id="rest_time" name="textinput" type="text" placeholder="enter time in minutes" class="form-control input-md custom_input">
+	    <label class="col-md-2 control-label" for="textinput">Weight</label>
+	    <div class="col-md-2">
+	      <input id="weight" name="textinput" type="text" placeholder="Weigth in KG" class="form-control input-md custom_input">
 	    </div>
+	  </div>
+	  
+	  <div class="form-group">
+	    <label class="col-md-2 control-label" for="selectbasic">Enter Date taken</label>
+	    <div class="col-md-2">
+	      <input type="date" id="date_taken" name="trip-start" value="yyyy-mm-dd"  min="1920-01-01" max="2018-12-31" class="form-control input-md custom_input">
 	  </div>
 
-	  <div class="form-group">
-	    <label class="col-md-4 control-label" for="textinput">Minutes</label>
-	    <div class="col-md-4">
-	      <input id="cardio_minutes" name="textinput" type="text" placeholder="enter time in minutes" class="form-control input-md custom_input">
-	    </div>
-	  </div>
-
-	  <div class="form-group">
-	    <label class="col-md-4 control-label" for="textinput">Date</label>
-	    <div class="col-md-4">
-	      <input id="datepicker" name="textinput" type="text" placeholder="select date" class="form-control input-md custom_input">
-	    </div>
-	  </div>
- 
- 
 	  <!-- <p>Date: <input type="text" id="datepicker"></p> -->
 	  
 	</fieldset>
@@ -177,8 +130,8 @@
       
     </div>
 
-
-    <div class="create_profile">
+ 
+     <div class="create_profile">
 
 	<form class="form-horizontal" id="workout_frm" hidden> <!-- hidden -->
 	  <fieldset>

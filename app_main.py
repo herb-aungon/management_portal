@@ -193,7 +193,7 @@ def budget_get(token):
                payload = request.data
                payload_json = json.loads(payload)
                
-               resp = "test" #render_template('fin.html', names=names, months=months)#json.dumps(message)
+               resp = render_template('finance_page.html', names=names, months=months)#json.dumps(message)
           except Exception as e:
                resp="Error! %s " % e
      else:
@@ -270,7 +270,7 @@ def get_budget(token,month,year):
                for x in list_name:
                     y = monthly_breakdown.get(x)
                     budget_val.append(y)
-                    test.append(x)
+                    # test.append(x)
                     
                line_chart.add(str('Name'),budget_val )
                
@@ -353,6 +353,20 @@ def workout_temp_get(token):
 @app.route("/home/<token>/create_workout", methods = [ 'OPTIONS' ] )
 def workout_temp_options(token):
      return ''
+
+
+@app.route("/home/<token>/health", methods = [ 'GET' ] )
+def health_get(token):
+     user_init = user(mongodb)
+     token_check = user_init.token_validator(token)
+     if token_check.get('success')==True:
+          try:
+               resp=render_template('health.html')#json.dumps(message)
+          except Exception as e:
+               resp="Error! %s " % e
+     else:
+          resp = render_template('log_in.html')#json.dumps(message)
+     return resp
 
 
 
