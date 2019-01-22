@@ -1,0 +1,183 @@
+{% extends "base.html" %}
+{% block finance %}
+   {{ super() }}
+
+<div id="left_menu">
+  <form  id="budget_cal" hidden>
+    <fieldset>
+
+      <div id="amount_remaining">
+      	<label class="label_amount">Budget:
+	  <input type="text"  id="total_budget" value="0" disabled />
+	</label>
+
+  	<label class="label_amount">Amount Remaining:
+	  <input type="text"  id="remaining" value="0" disabled />
+	</label>
+	
+	<label class="label_amount">Amount Allocated:
+	  <input type="text" id="amount_alloc" value="0" disabled />
+	</label>
+
+
+	<label class="label_amount">Total Amount(£):
+	  <input type="text" id="total_pounds" value="0" disabled />
+	</label>
+
+	<div class="add">
+	    <input type="text" id="new_member" placeholder="Enter Name" />
+	    <a href="#" class="btn btn-success" id="add">Add Member</a>
+	</div>
+      </div>
+  
+    </fieldset>
+  </form>
+
+  
+  <form  id="left_monthly">
+    <fieldset>
+
+      <div id="monthly_links">
+
+	<ul class="nav nav-pills nav-stacked">
+	  <li>
+	    <a href="#" class="sub_link_left" id="January">January</a>
+	  </li>
+	  <li>
+	    <a href="#" class="sub_link_left" id="February">February</a>
+	  </li>
+	  <li>
+	    <a href="#" class="sub_link_left" id="March">March</a>
+	  </li>
+	  <li>
+	    <a href="#" class="sub_link_left" id="April">April</a>
+	  </li>
+	  <li>
+	    <a href="#" class="sub_link_left" id="May">May</a>
+	  </li>
+    	  <li>
+	    <a href="#" class="sub_link_left" id="June">June</a>
+	  </li>
+    	  <li>
+	    <a href="#" class="sub_link_left" id="July">July</a>
+	  </li>
+    	  <li>
+	    <a href="#" class="sub_link_left" id="August">August</a>
+	  </li>
+          <li>
+	    <a href="#" class="sub_link_left" id="September">September</a>
+	  </li>
+    	  <li>
+	    <a href="#" class="sub_link_left" id="October">October</a>
+	  </li>
+	  <li>
+	    <a href="#" class="sub_link_left" id="November">November</a>
+	  </li>
+	  <li>
+	    <a href="#" class="sub_link_left" id="December">December</a>
+	  </li>
+   
+  </ul>
+
+	
+      </div>
+  
+    </fieldset>
+  </form>
+
+
+
+  
+</div>
+
+<div id="left_content">
+
+  <a  id="create_budget" href="#" style="margin-right:50px">Create Monthly Budget</a>
+  <a id="view_monthly" href="#">View Monthly Budget</a>
+
+  <div class="alert alert-danger budget_msg_ng" hidden>
+    <a href="" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+    <strong id="budget_msg_ng"></strong>
+  </div>
+
+  <div class="alert alert-danger budget_msg_ps" hidden>
+    <a href="" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+    <strong id="budget_msg_ps"></strong>
+  </div>
+  
+  
+  <br>
+  <br>
+
+  <!-- <textarea rows="4" cols="50"> -->
+  <!--   {{ names }} -->
+  <!--   </textarea> -->
+  
+
+  <form class="form-inline budget_form" id="budget_frm" hidden>
+    <fieldset>
+      <!-- <legend>Budget Form</legend> -->
+      <div class="col-md-8" id="form_container">
+	<label class="label_amount">Amount(Pesos):
+	  <select id="budget_amount">
+      	    <option selected>Set Budget</option>
+	  </select>
+	</label>
+	
+	<label class="label_rate" id="rate_label">Rate Pounds-Pesos:
+	  <select id="pounds_pesos">
+      	    <option selected>Set Rate</option>
+	  </select>
+	</label>
+	<label class="label_month" id="month_label" > Select Month:
+	  <select id="month" disabled>
+	    <option selected>Select Month</option>
+	    <option >January</option>
+	    <option >February</option>
+	    <option >March</option>
+	    <option >April</option>
+	    <option >May</option>
+	    <option >June</option>
+	    <option >July</option>
+	    <option >August</option>
+	    <option >September</option>
+	    <option >October</option>
+	    <option >November</option>
+	    <option >December</option>
+	  </select>
+	</label>
+	
+
+      </div>
+      
+      <div class="col-md-10 budget">
+	{% for name in names %}	
+	<input type="text" class="select_name" id="{{ name.name }}_" value="{{ name.name }}" disabled />
+	<select id="{{ name.name }}"  class="drop_amount" disabled>
+	  <option selected>0</option>
+	</select>
+	{% endfor %}
+
+	<br><span class="group-btn">
+	  <a href="#" class="btn btn-success" id="save">Save</a>
+	  <a href="#" class="btn btn-danger" id="reset">Reset All</a>
+	  <a href="#" class="btn btn-warning" id="close">Close</a>
+	</span>
+	
+      </div>
+      
+    </fieldset>
+  </form>
+
+  <div id="chart">
+    <!-- <staticContent> <mimeMap fileExtension=".svg" mimeType="image/svg+xml" src={{chart_test|safe}} style='max-width:500px'/> </staticContent> -->
+    {{chart_test.render()|safe}}  
+  </div>
+
+  <textarea rows="4" cols="50" id="monthly_val" show>
+    {{ budget }}
+  </textarea>
+
+
+
+  {% endblock %}
