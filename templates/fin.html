@@ -3,15 +3,6 @@
    {{ super() }}
 
 <div id="left_menu">
-  <!-- <ul class="nav nav-pills nav-stacked"> -->
-  <!--   <li> -->
-  <!--     <a href="#" class="sub_link_left">View Monthly BreakDown</a> -->
-  <!--   </li> -->
-  <!--   <li> -->
-  <!--     <a href="#" class="sub_link_left">View Monthly Housing Expenses</a> -->
-  <!--   </li> -->
-    
-  <!-- </ul> -->
   <form  id="budget_cal" >
     <fieldset>
 
@@ -186,6 +177,10 @@
   <textarea rows="4" cols="50" id="monthly_val" hidden>
     {{ food_items }}
     </textarea>
+
+  <div id="chart">
+    <!-- <staticContent> <mimeMap fileExtension=".svg" mimeType="image/svg+xml" src={{chart_test|safe}} style='max-width:500px'/> </staticContent> -->
+    <embed type="image" src={{chart_test|safe}} style='max-width:500px'/></div>
   
 </div>
 
