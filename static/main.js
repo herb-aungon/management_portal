@@ -452,13 +452,40 @@ $( document ).ready(function() {
 
 	//loop for generating dropdown values for sugar level
 	for (amount =1; amount < 26; amount += 1) {
-	    $('#set_slevel').append( new Option(amount) );
+	    $('#sugar_level').append( new Option(amount) );
 	}
-	$('#set_slevel').append( new Option("unreadable") );
+	$('#sugar_slevel').append( new Option("unreadable") );
 
 
     });
 
+    //function for adding and collecting sugar levels    
+    $("#reset_slevel").click(function(){
+	location.reload();
+    })
+
+
+    
+
+    $("#save_slevel").click(function(){
+
+	var health_val = {}
+	var get_heath_id = []
+	health_val["sugar_level"]=parseInt($("#sugar_level").val());
+	health_val["date_taken"]=$("#date_taken").val();
+	health_val["weight"]=parseInt($("#weight").val());
+	health_val["slevel_notes"]=$("#slevel_notes").val();
+	console.log(health_val);
+	var health =JSON.stringify(health_val);
+	console.log(health);
+
+
+	
+	//check if feilds are empty
+	// if ($('input[value=""]').length > 0) {
+	//     console.log('some fields are empty!')
+	// };
+    });
 
 
     

@@ -103,7 +103,7 @@
 	  <div class="form-group">
 	    <label class="col-md-2 control-label" for="textinput">Sugar Level</label>
 	    <div class="col-md-2">
-	      <select id="set_slevel" class="form-control input-md custom_input">
+	      <select id="sugar_level" class="form-control input-md custom_input slevel_val">
 		<option selected > Set Sugar Level </option>
 
 	      </select>
@@ -113,16 +113,30 @@
 	  <div class="form-group">
 	    <label class="col-md-2 control-label" for="textinput">Weight</label>
 	    <div class="col-md-2">
-	      <input id="weight" name="textinput" type="text" placeholder="Weigth in KG" class="form-control input-md custom_input">
+	      <input id="weight" name="textinput" type="text" placeholder="Weigth in KG" class="form-control input-md custom_input slevel_val">
 	    </div>
 	  </div>
 	  
 	  <div class="form-group">
 	    <label class="col-md-2 control-label" for="selectbasic">Enter Date taken</label>
 	    <div class="col-md-2">
-	      <input type="date" id="date_taken" name="trip-start" value="yyyy-mm-dd"  min="1920-01-01" max="2018-12-31" class="form-control input-md custom_input">
+	      <input type="date" id="date_taken" name="trip-start" value="yyyy-mm-dd"  min="1920-01-01" max="2018-12-31" class="form-control input-md custom_input slevel_val">
+	    </div>
 	  </div>
-
+	   
+	  <div class="form-group" style="margin-top: 20px;">
+	    <label class="col-md-2 control-label">Notes</label>
+	    <div class="col-md-2">
+	      <textarea rows="4" cols="50" id="slevel_notes" class="form-control input-md slevel_val"> </textarea>
+	    </div>
+	  </div>
+	  
+	  <div class="form-group" style="margin-left: 50px;">
+	    <span class="group-btn">
+	    <a href="#" class="btn btn-success" id="save_slevel">Save</a>
+	    <a href="#" class="btn btn-danger" id="reset_slevel">Reset All</a>
+	  </div>
+	    
 	  <!-- <p>Date: <input type="text" id="datepicker"></p> -->
 	  
 	</fieldset>
